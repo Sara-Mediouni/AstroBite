@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import "tailwindcss";
+
+/* tailwind.css or global.css */
+body {
+  font-family: "Orbitron", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.glow-effect {
+  box-shadow: 0 0 10px rgba(255, 80, 80, 0.7), 0 0 20px rgba(255, 150, 50, 0.4);
+}
+@keyframes float-slow {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+@keyframes float-slow {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-4px); }
+  100% { transform: translateY(0px); }
+}
+.footer-link{
+  @apply hover:text-yellow-300 transition cursor-pointer;
+}
+.animate-float-slow {
+  animation: float-slow 4s ease-in-out infinite;
+}
+
+@keyframes float-medium {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-30px);
+  }
+}
+
+@keyframes spin-slow {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-reverse {
+  0% {
+    transform: rotate(360deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes pulse-slow {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Apply classes */
+.animate-float-slow {
+  animation: float-slow 6s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 4s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 40s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 60s linear infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 3s ease-in-out infinite;
+}
+
+.input-style {
+  @apply px-4 py-3 rounded-lg border border-[#e5e7eb] focus:outline-none focus:ring-2 focus:ring-[#fce588] transition;
+}
+
+.button-form{
+  @apply bg-gradient-to-r from-yellow-500 to-yellow-700 text-black px-8 py-4 rounded-full text-lg font-semibold transform hover:scale-105 transition-all duration-300 shadow-xl hover:shadow-yellow-500/50;
+}
+.nav-link{
+  @apply hover:text-yellow-300 font-bold tracking-wider transition-all duration-200 hover:drop-shadow-[0_0_6px_#facc15];
+}
+.button-login{
+@apply bg-yellow-500 text-[#1f1f2e] py-3 rounded-lg font-semibold hover:bg-yellow-400  duration-300 shadow-xl hover:shadow-yellow-500/50;
+}
+.menu-card{
+  @apply p-6 bg-white/20 rounded-xl shadow-lg hover:scale-105 transform transition duration-300;
+}
+.feature-image{
+  @apply w-64 h-auto shadow-lg rounded-lg transform hover:scale-110 transition-all duration-300;
+}
+
+.order-button {
+  @apply mt-4 px-6 py-2 bg-yellow-500 text-black rounded-full hover:bg-yellow-400 hover:text-black transition duration-300 shadow-md;
+}
+
+.food-cart{
+ @apply p-6 bg-white/20 rounded-3xl shadow-xl flex flex-col items-center space-y-4  transform hover:scale-105 transition duration-300 ease-in-out;
+}
