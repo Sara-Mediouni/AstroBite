@@ -43,7 +43,7 @@ Le projet inclut également un **dashboard d'administration** complet pour gére
 
 ## 📸 Aperçu
 
-> (astro-bite.vercel.app)
+> (https://astro-bite.vercel.app)
 
 ---
 
