@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
-import NotFound from './pages/NotFound'
+import NotFound from './pages/404NotFound'
 import Home from './pages/Home'
 import { Route, Routes } from 'react-router-dom'
 import Navbar from './components/Navbar'
@@ -13,6 +13,7 @@ import Contact from './pages/Contact'
 import Menu from './pages/Menu'
 import ProfilePage from './pages/Profile'
 import MyOrders from './pages/MyOrders'
+import VerifyOrder from './pages/verify'
 const App = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -45,7 +46,8 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/menu" element={<Menu />} />
             <Route path="/myprofile" element={<ProfilePage />} />
-            <Route path="/my" element={<MyOrders />} />
+            <Route path="/myorders" element={<MyOrders />} />
+            <Route path="/verify" element={<VerifyOrder />} />
           </Routes>
       
         <Footer/>

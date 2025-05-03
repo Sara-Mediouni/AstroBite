@@ -6,6 +6,7 @@ const ListOrders = () => {
     const getorders=()=>{
       axios.get('http://localhost:4000/api/order/list')
       .then((response)=>{
+        console.log(response.data.data)
         setOrders(response.data.data)
       }).catch((error)=>{
         console.log('Error getting orders',error)
@@ -30,17 +31,12 @@ const ListOrders = () => {
           <span>Items: {order.items.map((item,index)=>
           <ul key={index}>
             <li>
-             Name: {item.name}
+             Name: {item.item.name}
             </li>
             <li>
              Quantity {item.quantity}
             </li>
-            <li>
-             Topping: {item.topping}
-            </li>
-            <li>
-             Size: {item.size}
-            </li>
+         
           </ul>
           
           )}</span>

@@ -7,7 +7,7 @@ const stripe = new Stripe(
 );
 //placing user order for frontend
 const placeOrder = async (req, res) => {
-  const frontend_url = "http://localhost:5174";
+  const frontend_url = "http://localhost:5173";
   try {
     const newOrder = new orderModel({
       userId:new mongoose.Types.ObjectId(req.body.userId),
@@ -59,7 +59,7 @@ const verifyOrder = async (req, res) => {
   const { orderId, success } = req.body;
   try {
     if (success === "true") {
-      await orderModel.findByIdAndUpdate(orderId,{payment:true});
+      await orderModel.findByIdAndUpdate(orderId,{payment:true,status:"Processing"});
       res.json({success:true, message:"Paid"})
     }
     else{
@@ -98,12 +98,13 @@ const listOrders=async(req, res)=>{
 //api for updating order status
 const updateStatus=async(req, res)=>{
       try{
-        await orderModel.findByIdAndUpdate(req.body.orderId, {status:req.body.status})
+        await orderModel.findByIdAndUpdate(req.body.orderId, {status:req.body.newStatus})
         res.json({success:true, message:"Status updated"})
       }catch(error){
          console.log(error);
          res.json({success:false, message:"Error updating status"})
       }
 }
+
 
 module.exports = { listOrders, placeOrder, verifyOrder,updateStatus , userOrders };

@@ -2,12 +2,12 @@ const mongoose=require('mongoose')
 const orderSchema=new mongoose.Schema({
     userId:{type:mongoose.Types.ObjectId, ref:"user",required:true},
     items:[
-    {item:{type:mongoose.Types.ObjectId,ref:"drink"},
+    {item:{type:mongoose.Types.ObjectId,ref:"food"},
     size:String,
     topping:String ,
 quantity:Number }],
     amount:{type:Number, required:true},
-    status:{type:String, default:"Order Processing"},
+    status:{type:String, default:"Pending"},
     date:{type:Date, default:Date.now()},
     payment:{type:Boolean, default:false}
 })
