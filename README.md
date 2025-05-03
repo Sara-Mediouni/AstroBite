@@ -1,0 +1,2 @@
+AstroBite - Galactic Fast Food Experience 🚀
+Welcome to AstroBite — a cosmic-themed fast food website that brings the galaxy of flavors to your fingertips! 🌌 Whether you're craving a juicy burger, crispy fries, or a refreshing cold brew, AstroBite offers an out-of-this-world dining experience.
