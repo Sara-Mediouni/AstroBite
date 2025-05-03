@@ -37,13 +37,13 @@ getfood()
       <h2 className="text-2xl font-semibold mb-4 text-center">Edit food</h2>
       <form onSubmit={(e)=>updatefood(e)} className="space-y-4">
         {/* Champs classiques */}
-        {['name', 'description', 'price',"rating"].map((field) => (
+        {['name', 'description', 'price'].map((field) => (
            
           <div key={field}> 
           {food &&
            <> <label className="block mb-1 capitalize font-medium">{field}</label>
             <input
-              type={field === 'price'|| field === 'rating'? 'number' : 'text'}
+              type={field === 'price'? 'number' : 'text'}
               name={field}
               value={food[field]}
               onChange={handleChange}
@@ -64,14 +64,14 @@ getfood()
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
           >
         <option value="">-- Select a category --</option>
-            <option value="Espresso">Espresso</option>
-            <option value="Latte">Latte</option>
-            <option value="Cappuccino">Cappuccino</option>
-            <option value="Mocha">Mocha</option>
-            <option value="Cold Brew">Cold Brew</option>
-            <option value="Frappuccino">Frappuccino</option>
-            <option value="Tea">Tea</option>
-            <option value="Smoothie">Smoothie</option>
+<option value="Galaxy Burgers"> Galaxy Burgers</option>
+<option value="Astro Fries"> Astro Fries</option>
+<option value="Meteor Pizzas"> Meteor Pizzas</option>
+<option value="Rocket Wraps"> Rocket Wraps</option>
+<option value="Cosmic Chicken"> Cosmic Chicken</option>
+<option value="Stellar Sips"> Stellar Sips</option>
+<option value="Nebula Desserts"> Nebula Desserts</option>
+<option value="Star Combos"> Star Combos</option>
           </select>
         </div>
 

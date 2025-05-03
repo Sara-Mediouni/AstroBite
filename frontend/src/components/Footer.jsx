@@ -1,6 +1,6 @@
 export default function Footer() {
   return (
-    <footer className=" text-white absolute bottom-0 w-full max-h-2xl py-10 border-t border-white/10 mt-20">
+    <footer className=" text-white w-full max-h-2xl py-10 border-t border-white/10 mt-20">
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
         <div className="text-yellow-300 font-bold tracking-wider text-lg">
           🚀 AstroBite © 2025

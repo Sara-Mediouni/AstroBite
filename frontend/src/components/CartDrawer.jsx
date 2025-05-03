@@ -11,10 +11,10 @@ const CartDrawer = ({ isOpen, onClose, cartItems}) => {
   const token =localStorage.getItem('token')
   const [orderData, setorderData] = useState()
   console.log(cartItems)
-  const {drink_list,removeFromCart,addToCart,getTotalCartAmount}=useContext(StoreContext)
+  const {food_list,removeFromCart,addToCart,getTotalCartAmount}=useContext(StoreContext)
   const handleOrder=()=>{
     let orderItems=[];
-    drink_list.map((item)=>{
+    food_list.map((item)=>{
     if (cartItems[item._id]?.quantity>0){
       let itemInfo=item;
       itemInfo["quantity"]=cartItems[item._id].quantity;
@@ -63,7 +63,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems}) => {
           animate={{ x: 0 }}
           exit={{ x: "100%" }}
           transition={{ type: "spring", stiffness: 300, damping: 30 }}
-          className="fixed top-0 right-0 w-full sm:w-[420px] h-full  z-50 shadow-2xl bg-white/20 rounded-l-[2rem] flex flex-col px-6 py-8"
+          className="fixed top-0 right-0 w-full sm:w-[420px] h-full  z-50 shadow-2xl md:bg-white/20 bg-black/90 rounded-l-[2rem] flex flex-col px-6 py-8"
         >
           {/* Header */}
           <div className="flex justify-between items-center mb-6">
@@ -77,15 +77,15 @@ const CartDrawer = ({ isOpen, onClose, cartItems}) => {
   
           {/* Content */}
           {Object.keys(cartItems).length === 0 ? (
-            <p className="text-[#f3e1d1] mt-10 text-center">Your Cart is Empty.</p>
+            <p className="text-[#f3e1d1] mt-14 text-center">Your Cart is Empty.</p>
           ) : (
-            <div className="flex-1 overflow-y-auto space-y-6 pr-2">
-              {drink_list?.map((item, idx) => {
+            <div className="flex-1 overflow-y-auto mt-10 space-y-6 pr-2">
+              {food_list?.map((item, idx) => {
                 if (cartItems[item._id]?.quantity > 0)
                   return (
                     <div
                       key={idx}
-                      className="flex justify-between items-center bg-gradient-to-r from-indigo-700 via-purple-700 to-indigo-800 rounded-2xl p-4 border border-[#f2e8e2] shadow-lg animate-float-slow"
+                      className="flex justify-between items-center bg-gradient-to-r rounded-2xl p-4 border border-[#f2e8e2] shadow-lg"
                     >
                       <div className="flex items-center gap-4">
                         <img src={`http://localhost:4000/uploads/${item.image}`} alt={item.name} className="w-14 h-14 rounded-xl object-cover" />
