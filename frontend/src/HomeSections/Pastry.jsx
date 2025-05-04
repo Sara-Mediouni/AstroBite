@@ -10,10 +10,10 @@ const Pastry = () => {
   
     <div className="flex justify-center flex-wrap gap-12 px-6">
       {[
-        { name: "Milky Way Muffin", image: assets.cupcake },
-        { name: "Saturn Donut", image: assets.cupcake  },
+        { name: "Milky Way Muffin", image: assets.muffin },
+        { name: "Saturn Donut", image: assets.donut  },
         { name: "Comet Cupcake", image: assets.cupcake  },
-        { name: "Meteor Ice Cream", image: assets.cupcake  },
+        { name: "Meteor Ice Cream", image: assets.icecream  },
       ].map((item, index) => (
         <div
           key={index}
