@@ -10,7 +10,7 @@ export default function Menu() {
   
   const [category, setCategory] = useState("")
   const [Food, setFood] = useState([])
-  const [Categories, setCategories] = useState()
+  const [Categories, setCategories] = useState([])
   const {addToCart}=useContext(StoreContext)
   const getFood=()=>{
     const url = category
@@ -54,9 +54,9 @@ export default function Menu() {
           ✨ Choose a Category
         </h2>
         <div className="flex flex-wrap justify-center gap-6">
-          {Categories?.map((cat) => (
+          {Categories?.map((cat,idx) => (
             <button
-              key={cat}
+              key={idx}
               onClick={()=>setCategory(cat)}
               className="bg-white/10 border border-yellow-400/30 text-yellow-100 px-5 py-2 rounded-full text-sm font-medium hover:bg-yellow-300 hover:text-black hover:shadow-[0_0_10px_#facc15] transition-all duration-300"
             >
@@ -73,7 +73,7 @@ export default function Menu() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-6xl mx-auto px-4">
         {Food?.map((item, idx) => (
           <div
-            key={idx}
+            key={item._id}
             className="bg-white/5 border border-yellow-200/10 rounded-xl p-6 shadow-md hover:scale-105 transition animate-float-medium"
           >
             <img src={`http://localhost:4000/uploads/${item.image}`} alt={item.name} className="w-32 h-32 mx-auto mb-4" />

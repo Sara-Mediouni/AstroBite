@@ -33,7 +33,7 @@ router.get("/Food/:id", getfood)
 
 ;
 // Ajouter un plat
-router.post("/", upload.single("image"),authMiddleware, addfood);
+router.post("/", upload.single("image"), addfood);
 
 // Supprimer un plat
 router.delete("/:id", deletefood);

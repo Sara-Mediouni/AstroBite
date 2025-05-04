@@ -9,8 +9,8 @@ const orderRouter=express.Router();
 
 orderRouter.post('/place',placeOrder);
 orderRouter.post('/verify',verifyOrder);
-orderRouter.get('/userorders/:userId',authMiddleware,userOrders);
-orderRouter.get('/list',authMiddleware, listOrders);
+orderRouter.get('/userorders/:userId',userOrders);
+orderRouter.get('/list', listOrders);
 orderRouter.post('/status', updateStatus);
 
 
