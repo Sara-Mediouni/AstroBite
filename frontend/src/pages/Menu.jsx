@@ -1,6 +1,5 @@
 
 import { useContext, useState,useEffect } from 'react';
-import {assets } from '../assets/assets'
 import { StoreContext } from '../context/StoreContext';
 import axios from 'axios';
 
@@ -18,8 +17,8 @@ export default function Menu() {
     : `http://localhost:4000/food/food`;
     axios.get(url)
     .then((response)=>{
-      console.log(response);
-      setFood(response.data)
+      console.log(response.data);
+      setFood(response.data.foods)
       
     }).catch((error)=>{
       console.log('Error',error)
@@ -29,7 +28,7 @@ export default function Menu() {
     axios.get(`http://localhost:4000/food/food/getallcategories`)
     .then((response)=>{
       console.log(response);
-      setCategories(response.data)
+      setCategories(response.data.uniqueCategories)
     }).catch((error)=>{
       console.log('Error',error)
     })

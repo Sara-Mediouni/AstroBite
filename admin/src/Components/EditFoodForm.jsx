@@ -13,10 +13,10 @@ const EditfoodForm = () => {
 
  
   const getfood=()=>{
-    axios.get(`http://localhost:4000/food/food/${foodId}`)
+    axios.get(`http://localhost:4000/food/food/Food/${foodId}`)
   .then((res)=>
     {
-        setfood(res.data);
+        setfood(res.data.food);
       toast.success(res.data.message)})
 
   .catch((error)=>toast.error('Error Adding the food',error))

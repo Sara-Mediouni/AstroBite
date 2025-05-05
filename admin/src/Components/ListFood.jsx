@@ -9,7 +9,7 @@ const ListFood = () => {
   const getfood=()=>{
     axios.get('http://localhost:4000/food/food/')
     .then((response)=>{
-      setfoods(response.data)
+      setfoods(response.data.foods)
     }).catch((error)=>{
       console.log('Error getting food',error)
     })
@@ -44,7 +44,7 @@ const ListFood = () => {
       <div key={index} className="bg-yellow-100 flex-col flex shadow-md rounded-lg p-4 space-y-2">
       <h2 className="text-xl font-semibold text-yellow-500">{food.name}</h2>
      
-      <span>Rating: {food.rating}</span>
+      
       <span>Category: {food.category}</span>
       <span>Price: {food.price}</span>
       <span>Description: {food.description}</span>

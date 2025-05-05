@@ -1,11 +1,12 @@
 const mongoose=require('mongoose')
 
 const foodSchema=new mongoose.Schema({
-    name: String,
+    name: {type:String,required:true
+    },
     description: String,
-    price: Number,
-    category: String,
-    image: String
+    price:{type:Number,required:true},
+    category: {type:String,required:true},
+    image: {type:String,required:true}
    
 })
 

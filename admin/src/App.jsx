@@ -17,7 +17,7 @@ const App = () => {
         <main className="flex-1 p-4 overflow-y-auto bg-gray-100">
           <Routes>
           <Route path="/addfood" element={<AddfoodForm/>} />
-          <Route path="/editdrink" element={<EditfoodForm/>} />
+          <Route path="/editfood" element={<EditfoodForm/>} />
          
           <Route path="/food" element={<ListFood />} />
             

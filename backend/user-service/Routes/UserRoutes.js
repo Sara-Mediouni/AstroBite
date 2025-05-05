@@ -8,7 +8,7 @@ userRouter.post('/register', registerUser)
 userRouter.post('/login',loginUser)
 userRouter.get('/getuser/:id', getUser)
 userRouter.put('/updateuser/:id', updateUser)
-userRouter.delete('/deleteuser', deleteUser)
+userRouter.delete('/deleteuser/:id', deleteUser)
 userRouter.get('/getallusers', getAllUsers)
 
 

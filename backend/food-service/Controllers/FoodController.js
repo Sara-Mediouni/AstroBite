@@ -3,7 +3,8 @@ const FoodModel = require('../Models/FoodSchema');
 
 // Ajouter un plat
 const addfood = async (req, res) => {
-  try {  console.log(req.body)
+  try { 
+     console.log(req.body)
     let image_filename=`${req.file.filename}`;
   
     const newFood = new FoodModel
@@ -15,7 +16,7 @@ const addfood = async (req, res) => {
        image:image_filename,
      });
     await newFood.save();
-    res.status(201).json(newFood);
+    res.status(201).json({success:true,newFood});
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Erreur serveur' });
@@ -29,9 +30,9 @@ const deletefood = async (req, res) => {
     if (!deletedfood) {
       return res.status(404).json({ message: 'Plat non trouvé' });
     }
-    res.json({ message: 'supprimé avec succès' });
+    res.status(200).json({ success:true,message: 'supprimé avec succès' });
   } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la suppression', error });
+    res.status(500).json({ success:false,message: 'Erreur lors de la suppression', error });
   }
 };
 
@@ -42,7 +43,7 @@ const updatefood = async (req, res) => {
     if (!updatedfood) {
       return res.status(404).json({ message: 'Plat non trouvé' });
     }
-    res.json({ message: ' mis à jour avec succès', food: updatedfood });
+    res.status(200).json({ message: ' mis à jour avec succès', food: updatedfood });
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la mise à jour', error });
   }
@@ -52,7 +53,7 @@ const updatefood = async (req, res) => {
 const getAllfoods = async (req, res) => {
    try {
      const foods = await FoodModel.find();
-     res.json(foods);
+     res.status(200).json({success:true,foods});
    } catch (error) {
      res.status(500).json({ message: 'Erreur lors de la récupération', error });
    }
@@ -65,17 +66,14 @@ const getAllfoods = async (req, res) => {
     if (filter !== "") {
       foods = await FoodModel.find({ category: filter });
     } else {
-      foods = await FoodModel.find(); // Ajout du await ici
+      foods = await FoodModel.find(); 
     }
 
-    res.json(foods);
+    res.status(200).json({success:true,foods});
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la récupération', error });
   }
 };
-
-
-
 
 
 const getAllCategories = async (req, res) => {
@@ -94,7 +92,7 @@ const getAllCategories = async (req, res) => {
       return acc;
     }, []);
 
-    res.status(200).json(uniqueCategories );
+    res.status(200).json({success:true, uniqueCategories });
   } catch (error) {
     res.status(500).json({ message: 'Erreur lors de la récupération des plats', error });
   }
@@ -104,7 +102,7 @@ const getfood=async(req,res)=>{
    { 
     const id=req.params.id;
     const food=await FoodModel.findById(id);
-    res.status(200).json(food);
+    res.status(200).json({success:true,food});
     }
     catch(error){
       res.status(500).json({ message: 'Error getting the food', error });

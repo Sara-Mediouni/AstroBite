@@ -2,7 +2,7 @@ const  userModel=require ("../Models/User");
 const  jwt =require ('jsonwebtoken');
 const bcrypt =require ('bcrypt');
 const validator =require ('validator');
-const { isValidObjectId } = require("mongoose");
+
 
 
 //login user
@@ -20,11 +20,11 @@ const loginUser = async (req, res)=>{
         return res.json({success:false,message:"Invalid credentials" })
     }
     const token= createToken(user._id);
-    res.json({success:true, token})
+    res.status(200).json({success:true, token})
     }
     catch(error){
       console.log(error);
-      res.json({success:false, message:"Error"})
+      res.status(500).json({success:false, message:"Error"})
     }
 
 }
@@ -45,14 +45,14 @@ const registerUser = async (req, res)=>{
             email
         });
         if (exists){
-            return res.json({success:false, message:"User already exists"})
+            return res.status(400).json({success:false, message:"User already exists"})
         }
         //validating email format & strong password 
     if (!validator.isEmail(email)){
-        return res.json({success:false, message:"Please enter a valid email"})
+        return res.status(400).json({success:false, message:"Please enter a valid email"})
     }
     if (password.length<8){
-        return res.json({success:false, message: "Please enter a strong password"})
+        return res.status(400).json({success:false, message: "Please enter a strong password"})
     }
     //hashing user password
     const salt=await bcrypt.genSalt(10);
@@ -73,27 +73,27 @@ const registerUser = async (req, res)=>{
     })
     const user=await newUser.save()
     const token =createToken(user._id)
-    res.json({success:true, token})
+    res.status(201).json({success:true, token})
 }
     
     catch (error){
-       console.log(error);
-       res.json({success:false, error})
+        console.error("Error in registerUser:", error);
+       res.status(500).json({success:false, error})
     }
 }
 const getUser=async (req, res)=>{
-     // Récupère l'id de l'URL
+    
         try{
          const id = req.params.id;
         const user=await userModel.findById(id).select("-password -__v")
         if (!user){
             return res.json({success:false, message:"User not found"})
         }
-        res.json({success:true, user})
+        res.status(200).json({success:true, user})
     }
     catch (error){
         console.log(error);
-        res.json({success:false, error})
+        res.status(500).json({success:false, error})
     }
 }
 const updateUser=async (req, res)=>{
@@ -107,27 +107,28 @@ const updateUser=async (req, res)=>{
         //validating email format & strong password 
         else{
         const updatedUser=await userModel.findByIdAndUpdate(id, req.body, {new:true}).select("-password -__v")
-        res.json({success:true, updatedUser})
+        res.status(200).json({success:true, updatedUser})
     }}
     catch (error){
         console.log(error);
-        res.json({success:false, error})
+        res.status(500).json({success:false, error})
     }
 }
 const deleteUser=async (req, res)=>{
-    const {id}=req.user;
+    const {id}=req.params;
     try{
+        console.log("id:",id)
         const user=await
     userModel.findById(id).select("-password -__v")
         if (!user){
             return res.json({success:false, message:"User not found"})
         }
         await userModel.findByIdAndDelete(id)
-        res.json({success:true, message:"User deleted successfully"})
+        res.status(200).json({success:true, message:"User deleted successfully"})
     }
     catch (error){
         console.log(error);
-        res.json({success:false, error})
+        res.status(500).json({success:false, error})
     }
 }
 const getAllUsers=async (req, res)=>{
@@ -136,11 +137,11 @@ const getAllUsers=async (req, res)=>{
         if (!users){
             return res.json({success:false, message:"No users found"})
         }
-        res.json({success:true, users})
+        res.status(200).json({success:true, users})
     }
     catch (error){
         console.log(error);
-        res.json({success:false, error})
+        res.status(500).json({success:false, error})
     }
 }
 
