@@ -84,28 +84,28 @@ nodemon server
 ### 3. Créer un fichier `.env` dans /backend avec les variables suivantes :
 Créer un fichier .env pour chaque microservice dans les répertoires appropriés :
 
-### User Service (/backend/user-service/.env) :
+#### User Service (/backend/user-service/.env) :
 
 ```bash 
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=4001
 ```
-### Order Service (/backend/order-service/.env) :
+#### Order Service (/backend/order-service/.env) :
 
 ```bash 
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=4002
 ```
-### Food Service (/backend/food-service/.env) :
+#### Food Service (/backend/food-service/.env) :
 ```bash 
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=4003
 ```
 
-### API Gateway (/backend/gateway/.env) :
+#### API Gateway (/backend/gateway/.env) :
 ```bash 
 USER_SERVICE_URL=http://localhost:4001
 ORDER_SERVICE_URL=http://localhost:4002
