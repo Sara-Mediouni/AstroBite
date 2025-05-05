@@ -9,9 +9,9 @@ const { ErrorHandler } = require('./middleware/ErrorHandler.js');
 const app=express();
 app.use(cors());
 
-app.use('/user', createProxyMiddleware({ target: 'http://localhost:4001', changeOrigin: true }));
-app.use('/order', createProxyMiddleware({ target: 'http://localhost:4002', changeOrigin: true }));
-app.use('/food', createProxyMiddleware({ target: 'http://localhost:4003', changeOrigin: true }));
+app.use('/user', createProxyMiddleware({ target: process.env.USER_SERVICE_URL, changeOrigin: true }));
+app.use('/order', createProxyMiddleware({ target: process.env.ORDER_SERVICE_URL, changeOrigin: true }));
+app.use('/food', createProxyMiddleware({ target: process.env.FOOD_SERVICE_URL, changeOrigin: true }));
 {/*
 app.get('/users', async (req, res) => {
   try {
