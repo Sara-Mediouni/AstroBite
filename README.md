@@ -70,7 +70,8 @@ git clone https://github.com/Sara-Mediouni/AstroBite.git
 cd astrobite
 ``` 
 ### 2. Installer les dépendances
-``` bash
+
+```bash
 cd frontend
 npm run dev
 
@@ -114,6 +115,7 @@ FOOD_SERVICE_URL=http://localhost:4003
 
 
 ### 4. Démarrer le backend
+```bash
 cd backend/user-service
 nodemon server.js
 
@@ -126,15 +128,17 @@ nodemon server.js
 cd ../api-gateway
 nodemon server.js
 
-
+```
 ### 5. Démarrer le frontend client
+```bash
 cd ../frontend
 npm run dev
-
+```
 ### 6. Démarrer le dashboard admin (optionnel)
+```bash
 cd ../admin
 npm run dev
-
+```
 ## 📂 Organisation du projet
 
 ```bash
