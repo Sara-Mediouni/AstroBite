@@ -160,13 +160,13 @@ npm run dev
 ```
 
 ### Microservices :
-### User Service : Gérez les utilisateurs (inscription, profil, etc.).
+#### User Service : Gérez les utilisateurs (inscription, profil, etc.).
 
-### Order Service : Traitez les commandes passées par les utilisateurs.
+#### Order Service : Traitez les commandes passées par les utilisateurs.
 
-### Food Service : Gérez les plats proposés dans le menu.
+#### Food Service : Gérez les plats proposés dans le menu.
 
-### Chaque service est responsable d'une fonctionnalité spécifique et l'API Gateway redirige les requêtes vers les services appropriés.
+#### Chaque service est responsable d'une fonctionnalité spécifique et l'API Gateway redirige les requêtes vers les services appropriés.
 
 
 ## 📋 Fonctionnalités principales
