@@ -36,7 +36,7 @@ const AddfoodForm = () => {
     });
 
     try {
-      await axios.post('http://localhost:4000/api/food/', data, {
+      await axios.post('http://localhost:4000/food/food/', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

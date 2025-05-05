@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react'
 const ListOrders = () => {
     const [Orders,setOrders]=useState([])
     const getorders=()=>{
-      axios.get('http://localhost:4000/api/order/list')
+      axios.get('http://localhost:4000/order/order/list')
       .then((response)=>{
         console.log(response.data.data)
         setOrders(response.data.data)

@@ -7,7 +7,7 @@ import {FaTrash} from 'react-icons/fa'
 const ListFood = () => {
   const [foods,setfoods]=useState([])
   const getfood=()=>{
-    axios.get('http://localhost:4000/api/food/')
+    axios.get('http://localhost:4000/food/food/')
     .then((response)=>{
       setfoods(response.data)
     }).catch((error)=>{
@@ -15,7 +15,7 @@ const ListFood = () => {
     })
   }
   const handleDelete=(foodId)=>{
-    axios.delete(`http://localhost:4000/api/food/${foodId}`)
+    axios.delete(`http://localhost:4000/food/food/${foodId}`)
     .then((response)=>{
      console.log(response)
      toast.success("food Deleted Successfully")
@@ -48,7 +48,7 @@ const ListFood = () => {
       <span>Category: {food.category}</span>
       <span>Price: {food.price}</span>
       <span>Description: {food.description}</span>
-      <span>Image: <img src={`http://localhost:4000/uploads/${food.image}`}/></span>
+      <span>Image: <img src={`http://localhost:4003/uploads/${food.image}`}/></span>
      <div className='flex  gap-5'> <button className='delete' onClick={()=>handleDelete(food._id)}> <FaTrash /></button>
          <button className='update' onClick={()=>handleEdit(food._id)}> <MdOutlineEditCalendar /></button>
          </div> </div>

@@ -1,0 +1,45 @@
+const express = require('express')
+const cors = require('cors')
+const env=require ('dotenv/config');
+const { createProxyMiddleware } = require('http-proxy-middleware'); // Correct import
+const helmet = require("helmet");
+const morgan=require('morgan');
+const { ErrorHandler } = require('./middleware/ErrorHandler.js');
+
+const app=express();
+app.use(cors());
+
+app.use('/user', createProxyMiddleware({ target: 'http://localhost:4001', changeOrigin: true }));
+app.use('/order', createProxyMiddleware({ target: 'http://localhost:4002', changeOrigin: true }));
+app.use('/food', createProxyMiddleware({ target: 'http://localhost:4003', changeOrigin: true }));
+{/*
+app.get('/users', async (req, res) => {
+  try {
+    const response = await axios.get('http://user-service:4001/users');
+    res.json(response.data);
+  } catch (err) {
+    res.status(500).json({ error: 'User service error' });
+  }
+});*/}
+
+
+const port=4000
+
+// enabling the Helmet middleware
+
+
+app.use('/uploads', express.static('uploads'));
+// Puis seulement après, tu mets express.json() pour tout le reste
+app.use(express.json())
+app.use(helmet());
+
+app.use(morgan('dev'));
+
+
+
+
+app.use(ErrorHandler);
+
+app.listen(port,()=>{
+    console.log(`API gateway started on ${port}` )
+})

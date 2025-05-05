@@ -30,7 +30,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems}) => {
   const checkout=async()=>{
     try {
       await handleOrder(); // Assure que les données sont bien prêtes
-      const response = await axios.post("http://localhost:4000/api/order/place", orderData);
+      const response = await axios.post("http://localhost:4000/order/order/place", orderData);
       
       console.log(response);
   
@@ -88,7 +88,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems}) => {
                       className="flex justify-between items-center bg-gradient-to-r rounded-2xl p-4 border border-[#f2e8e2] shadow-lg"
                     >
                       <div className="flex items-center gap-4">
-                        <img src={`http://localhost:4000/uploads/${item.image}`} alt={item.name} className="w-14 h-14 rounded-xl object-cover" />
+                        <img src={`http://localhost:4003/uploads/${item.image}`} alt={item.name} className="w-14 h-14 rounded-xl object-cover" />
                         <div>
                           <h3 className="text-yellow-300 font-semibold">{item.name}</h3>
                           <div className="flex items-center mt-1 space-x-2">

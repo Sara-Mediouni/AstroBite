@@ -29,7 +29,7 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
   }, [error]);
   const Login = () => {
     axios
-      .post(`http://localhost:4000/api/user/${url}`, form)
+      .post(`http://localhost:4000/user/user/${url}`, form)
       .then((response) => {
         if (response.data.success) {
           dispatch(setToken(response.data.token));

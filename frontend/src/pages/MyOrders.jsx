@@ -6,7 +6,7 @@ const MyOrders = () => {
   const userId=localStorage.getItem('user')
   const [newStatus, setnewStatus] = useState("Cancelled")
   const getmyorders=()=>{
-    axios.get(`http://localhost:4000/api/order/userorders/${userId}`)
+    axios.get(`http://localhost:4000/order/order/userorders/${userId}`)
     .then((response)=>
       {setOrders(response.data.data);
       console.log(response.data)
@@ -14,7 +14,7 @@ const MyOrders = () => {
     .catch((error)=>console.log(error))
   }
   const onCancelOrder=(orderId)=>{
-    axios.post(`http://localhost:4000/api/order/status`,{orderId,newStatus})
+    axios.post(`http://localhost:4000/order/order/status`,{orderId,newStatus})
     .then((response)=>
       {getmyorders();
       console.log(response.data)
@@ -42,15 +42,16 @@ const MyOrders = () => {
   ) : (
     orders?.map((order, idx) => (
       <div
-    key={idx}
-    className="border border-white/10 backdrop-blur-md bg-white/10 rounded-lg p-6 shadow-xl hover:scale-[1.02] transition-transform space-y-4"
+    data-testid={`order-${order._id}`}
+    key={order._id}
+    className="min-w-[220px] px-auto border border-white/10 backdrop-blur-md bg-white/10 rounded-lg p-6 shadow-xl hover:scale-[1.02] transition-transform space-y-4"
   >
     {/* Items in the order */}
-    <div className="flex flex-wrap items-center gap-6">
+    <div className="flex flex-col items-start gap-6 w-full">
       {order.items.map((item, index) => (
         <div key={index} className="flex items-center gap-4">
           <img
-            src={`http://localhost:4000/uploads/${item.item.image}`}
+            src={`http://localhost:4003/uploads/${item.item.image}`}
             alt={item.item.name}
             className="w-20 h-20 rounded-lg object-cover border-2 border-yellow-300 shadow"
           />
@@ -65,7 +66,8 @@ const MyOrders = () => {
     </div>
 
     {/* Status & Actions */}
-    <div className="flex justify-between items-center mt-4">
+    <div className="flex flex-col md:justify-between justify-start md:items-center items-start gap-10 mt-4">
+    <p className="text-sm text-white/80">Total: {order.amount}</p>
       <p className="text-sm text-white/80">
         Status:{" "}
         <span className="font-semibold">
@@ -74,6 +76,7 @@ const MyOrders = () => {
       </p>
       {order.status === "Cancelled" ? <></> :
        <button
+        data-testid={`cancel-${order._id}`}
         onClick={() => onCancelOrder(order._id)}
         className="bg-red-500 hover:bg-red-400 text-white font-semibold px-5 py-2 rounded-full transition"
       >

@@ -20,7 +20,7 @@ const ProfilePage = () => {
   });
   const getuser=()=>{
     
-    axios.get(`http://localhost:4000/api/user/getuser/${user}`)
+    axios.get(`http://localhost:4000/user/user/getuser/${user}`)
     .then((response)=>{
       console.log(response)
       setUserData(response.data.user)
@@ -29,7 +29,7 @@ const ProfilePage = () => {
   }
   const handleEditUser=()=>{
     
-    axios.put(`http://localhost:4000/api/user/updateuser/${user}`,profile)
+    axios.put(`http://localhost:4000/user/user/updateuser/${user}`,profile)
     .then((response)=>{
       console.log(response)
       

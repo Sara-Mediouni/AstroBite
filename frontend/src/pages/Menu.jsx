@@ -14,8 +14,8 @@ export default function Menu() {
   const {addToCart}=useContext(StoreContext)
   const getFood=()=>{
     const url = category
-    ? `http://localhost:4000/api/food/category/${category}`
-    : `http://localhost:4000/api/food`;
+    ? `http://localhost:4000/food/food/category/${category}`
+    : `http://localhost:4000/food/food`;
     axios.get(url)
     .then((response)=>{
       console.log(response);
@@ -26,7 +26,7 @@ export default function Menu() {
     })
   }
   const getCategories=()=>{
-    axios.get(`http://localhost:4000/api/food/getallcategories`)
+    axios.get(`http://localhost:4000/food/food/getallcategories`)
     .then((response)=>{
       console.log(response);
       setCategories(response.data)
@@ -76,7 +76,7 @@ export default function Menu() {
             key={item._id}
             className="bg-white/5 border border-yellow-200/10 rounded-xl p-6 shadow-md hover:scale-105 transition animate-float-medium"
           >
-            <img src={`http://localhost:4000/uploads/${item.image}`} alt={item.name} className="w-32 h-32 mx-auto mb-4" />
+            <img src={`http://localhost:4003/uploads/${item.image}`} alt={item.name} className="w-32 h-32 mx-auto mb-4" />
             <h3 className="text-xl font-semibold text-yellow-300">{item.name}</h3>
             <p className="text-gray-300">{item.price}</p>
             <button onClick={()=>{addToCart(item._id)}}

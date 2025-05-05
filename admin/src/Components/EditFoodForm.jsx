@@ -13,7 +13,7 @@ const EditfoodForm = () => {
 
  
   const getfood=()=>{
-    axios.get(`http://localhost:4000/api/food/${foodId}`)
+    axios.get(`http://localhost:4000/food/food/${foodId}`)
   .then((res)=>
     {
         setfood(res.data);
@@ -23,7 +23,7 @@ const EditfoodForm = () => {
   }
   const updatefood=async(e)=>{
     e.preventDefault();
-    await axios.put(`http://localhost:4000/api/food/${foodId}`,food)
+    await axios.put(`http://localhost:4000/food/food/${foodId}`,food)
   .then((res)=>
     {console.log(res);
         toast.success('food updated successfully!')})
@@ -90,7 +90,7 @@ getfood()
           <label className="block mb-1 font-medium">Image</label>
           <img
             
-            src={`http://localhost:4000/uploads/${food?.image}`}
+            src={`http://localhost:4003/uploads/${food?.image}`}
             className="w-[100px] px-4 py-2 border border-gray-300 rounded-md"
           />
         </div>

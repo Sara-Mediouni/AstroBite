@@ -36,18 +36,16 @@ describe("My orders", () => {
   it("affiche les commandes et permet d'annuler une commande", async () => {
     render(<MyOrders />);
 
-   // Vérifie que le nom du plat apparaît (plus fiable que l'ID)
-   const item = await screen.findByText("Sushi Roll");
-   expect(item).toBeInTheDocument();
-
-    // Clique sur le bouton Cancel
-    const cancelBtn = screen.getByText("Cancel");
-    fireEvent.click(cancelBtn);
-
-    // Attends que l'appel API soit effectué
+    const orderCard = await screen.findByTestId("order-1");
+    expect(orderCard).toBeInTheDocument();
+  
+    const cancelButton = screen.getByTestId("cancel-1");
+    fireEvent.click(cancelButton);
+  
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith(
-        expect.stringContaining("/status/1")
+        expect.stringContaining("/status"),
+        expect.objectContaining({ orderId: "1", newStatus: "Cancelled" })
       );
     });
   });
