@@ -62,13 +62,15 @@ Le projet inclut également un dashboard d'administration complet pour gérer le
 ---
 
 ## 🚀 Lancer localement
+### 1. Cloner le repo
 
 ```bash
-# 1. Cloner le repo
+
 git clone https://github.com/Sara-Mediouni/AstroBite.git
 cd astrobite
-
-# 2. Installer les dépendances
+``` 
+### 2. Installer les dépendances
+``` bash
 cd frontend
 npm run dev
 
@@ -78,31 +80,31 @@ npm run dev
 cd ../backend
 nodemon server
 ```
-# 3. Créer un fichier `.env` dans /backend avec les variables suivantes :
+### 3. Créer un fichier `.env` dans /backend avec les variables suivantes :
 Créer un fichier .env pour chaque microservice dans les répertoires appropriés :
 
-# User Service (/backend/user-service/.env) :
+### User Service (/backend/user-service/.env) :
 
 ```bash 
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=4001
 ```
-# Order Service (/backend/order-service/.env) :
+### Order Service (/backend/order-service/.env) :
 
 ```bash 
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=4002
 ```
-# Food Service (/backend/food-service/.env) :
+### Food Service (/backend/food-service/.env) :
 ```bash 
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=4003
 ```
 
-# API Gateway (/backend/gateway/.env) :
+### API Gateway (/backend/gateway/.env) :
 ```bash 
 USER_SERVICE_URL=http://localhost:4001
 ORDER_SERVICE_URL=http://localhost:4002
@@ -111,7 +113,7 @@ FOOD_SERVICE_URL=http://localhost:4003
 ```
 
 
-# 4. Démarrer le backend
+### 4. Démarrer le backend
 cd backend/user-service
 nodemon server.js
 
@@ -125,21 +127,16 @@ cd ../api-gateway
 nodemon server.js
 
 
-# 5. Démarrer le frontend client
+### 5. Démarrer le frontend client
 cd ../frontend
 npm run dev
 
-# 6. Démarrer le dashboard admin (optionnel)
+### 6. Démarrer le dashboard admin (optionnel)
 cd ../admin
 npm run dev
 
-
-
-
-
-
-```
 ## 📂 Organisation du projet
+
 ```bash
 /AstroBite
   /frontend               # Application frontend (React)
@@ -156,18 +153,16 @@ npm run dev
   README.md               # Documentation du projet
 
 
-
-
 ```
 
-Microservices :
-User Service : Gérez les utilisateurs (inscription, profil, etc.).
+### Microservices :
+### User Service : Gérez les utilisateurs (inscription, profil, etc.).
 
-Order Service : Traitez les commandes passées par les utilisateurs.
+### Order Service : Traitez les commandes passées par les utilisateurs.
 
-Food Service : Gérez les plats proposés dans le menu.
+### Food Service : Gérez les plats proposés dans le menu.
 
-Chaque service est responsable d'une fonctionnalité spécifique et l'API Gateway redirige les requêtes vers les services appropriés.
+### Chaque service est responsable d'une fonctionnalité spécifique et l'API Gateway redirige les requêtes vers les services appropriés.
 
 
 ## 📋 Fonctionnalités principales
