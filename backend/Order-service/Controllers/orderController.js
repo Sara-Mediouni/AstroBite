@@ -8,6 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_API_KEY);
 
 const placeOrder = async (req, res) => {
   const frontend_url = "http://localhost:5173";
+
   try {
     const newOrder = new orderModel({
       userId: new mongoose.Types.ObjectId(req.body.userId),
@@ -17,6 +18,9 @@ const placeOrder = async (req, res) => {
       })),
       amount: req.body.amount,
     });
+
+    // Sauvegarde d'abord la commande
+    await newOrder.save();
 
     const line_items = req.body.items.map((item) => ({
       price_data: {
@@ -29,29 +33,32 @@ const placeOrder = async (req, res) => {
       quantity: item.quantity,
     }));
 
+    // Ajout des frais de livraison
     line_items.push({
       price_data: {
         currency: "usd",
         product_data: {
           name: "Delivery Charges",
         },
-        unit_amount: 2,
+        unit_amount: 200, // 2 USD = 200 cents
       },
       quantity: 1,
     });
+
     const session = await stripe.checkout.sessions.create({
-      line_items: line_items,
+      line_items,
       mode: "payment",
       success_url: `${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
       cancel_url: `${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
     });
+
     res.status(200).json({ success: true, session_url: session.url });
-    console.log(newOrder);
-    await newOrder.save();
   } catch (error) {
-    res.status(500).json({ success: false, message: "error", error });
+    console.error("Error placing order:", error);
+    res.status(500).json({ success: false, message: "Order failed", error });
   }
 };
+
 const verifyOrder = async (req, res) => {
   const { orderId, success } = req.body;
   try {
@@ -73,17 +80,20 @@ const verifyOrder = async (req, res) => {
 
 const userOrders = async (req, res) => {
   try {
+    console.log(req)
     const allOrders = await orderModel.find({ userId: req.params.userId });
-
+    console.log(allOrders)
     const orders = await Promise.all(
       allOrders.map(async (order) => {
         try {
           const items = await Promise.all(
             order.items.map(async (itemObj) => {
+              console.log(itemObj.item);
               try {
                 const itemData = await axios.get(
                   `http://localhost:4000/food/food/Food/${itemObj.item}`
                 );
+                console.log(itemData)
                 return {
                   ...itemObj,
                   item: itemData.data,
@@ -109,10 +119,10 @@ const userOrders = async (req, res) => {
       })
     );
 
-    res.json({ success: true, data: orders });
+    res.status(200).json({ success: true, data: orders });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "Error" });
+    res.status(500).json({ success: false, message: "Error" });
   }
 };
 
@@ -164,8 +174,8 @@ const listOrders = async (req, res) => {
       })
     );
 
-    res.status(200).json({ data: orders });
-  } catch (err) {
+    res.status(200).json({success:true, data: orders });
+  } catch (err) { 
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
 };
@@ -175,10 +185,10 @@ const updateStatus = async (req, res) => {
     await orderModel.findByIdAndUpdate(req.body.orderId, {
       status: req.body.newStatus,
     });
-    res.json({ success: true, message: "Status updated" });
+    res.status(200).json({ success: true, message: "Status updated" });
   } catch (error) {
     console.log(error);
-    res.json({ success: false, message: "Error updating status" });
+    res.status(500).json({ success: false, message: "Error updating status" });
   }
 };
 

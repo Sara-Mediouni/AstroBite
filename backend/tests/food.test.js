@@ -1,106 +1,280 @@
-const request = require("supertest");
-const { app, connectDB } = require("../food-service/index");
-const chai = require("chai");
-const { default: mongoose } = require("mongoose");
-const path = require("path");
-const expect = chai.expect;
+const sinon = require("sinon");
+const { expect } = require("chai");
+const mongoose = require("mongoose");
+const Food = require("../food-service/Models/FoodSchema");  // Ton modèle Food
+const { addfood,
+   deletefood,
+   updatefood,
+   getAllfoods,
+   filterfood,
+   
+   getAllCategories,
+  
+   getfood}= require ('../food-service/Controllers/FoodController');
 
-let createdFoodId = null;
+describe("Food Controller Tests", function () {
 
-describe("FOOD TEST", function () {
-  before(async () => {
-    await connectDB();
+ afterEach(() => {
+    sinon.restore(); // restaure tous les stubs/spies/mocks
   });
 
-  after(async () => {
-    await mongoose.connection.close();
+
+
+  it("should create a food item and returns 201", async () => {
+    const req={
+      body:{
+       
+      name: "Pizza",
+      price: 12.5,
+      description: "Vegetarian pizza",
+      category: "Pizza",
+      
+    
+      },
+      file:{filename:"pizza.png"}
+    }
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
+
+    }
+    const id=new mongoose.Types.ObjectId;
+    const newFood={
+      _id: id.toString(),
+      name: "Pizza",
+      price: 12.5,
+      description: "Vegetarian pizza",
+      category: "Pizza",
+      image:"pizza.png"
+    }
+  sinon.stub(Food, 'find').resolves(null);
+  sinon.stub(Food.prototype, 'save').resolves(newFood);
+  await addfood(req,res);
+  
+   expect(res.status.calledWith(201)).to.be.true;
+   expect(res.json.calledWithMatch({success:true,newFood}))
   });
-  it("POST /add", async () => {
-    console.log("Test add food");
+  it("should create a food item and returns 400 because the food exists", async () => {
+    const req={
+      body:{
+       
+      name: "Pizza",
+      price: 12.5,
+      description: "Vegetarian pizza",
+      category: "Pizza",
+      
+    
+      },
+      file:{filename:"pizza.png"}
+    }
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
 
-    console.log("add food called");
-    const res = await request(app)
-      .post("/food/")
-      .field("name", "Pizza")
-      .field("price", "12.5")
-      .field("description", "vegeterian pizza")
-      .field("category", "Pizza")
-      .attach(
-        "image",
-        path.resolve(__dirname, "../food-service/uploads/coke.png")
-      );
-
-    expect(res.status).to.equal(201);
-
-    expect(res.body).to.have.property("success", true);
-    expect(res.body).to.have.property("newFood");
+    }
+    const id=new mongoose.Types.ObjectId;
+    const newFood={
+      _id: id.toString(),
+      name: "Pizza",
+      price: 12.5,
+      description: "Vegetarian pizza",
+      category: "Pizza",
+      image:"pizza.png"
+    }
+  sinon.stub(Food, 'find').resolves(newFood);
+  
+  await addfood(req,res);
+  
+   expect(res.status.calledWith(400)).to.be.true;
+   expect(res.json.calledWithMatch({success:false,message:"Food already exists"}))
   });
+  it("should delete a food item and returns 200", async () => {
+    const idToDelete=new mongoose.Types.ObjectId();
+    const req={
+      params:{id:idToDelete.toString()}
+    }
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
 
-  it("GET /", async () => {
-    const res = await request(app)
-      .get(`/food/`)
-      .set("Content-Type", "application/json");
-
-    expect(res.status).to.equal(200);
-    expect(res.body).to.have.property("success", true);
-    expect(res.body).to.have.property("foods").that.is.an("array");
-
-    createdFoodId = res.body.foods.find((food) => food.name === "Pizza")?._id;
-    expect(createdFoodId).to.exist;
+    }
+   
+    const FoodToDelete={
+      _id: idToDelete.toString(),
+      name: "Pizza",
+      price: 12.5,
+      description: "Vegetarian pizza",
+      category: "Pizza",
+      image:"pizza.png"
+    }
+    const findByIdAndDelete=sinon.stub(Food, 'findByIdAndDelete').resolves(FoodToDelete);
+  
+  await deletefood(req,res);
+   expect(findByIdAndDelete.calledWith(idToDelete.toString())).to.be.true;
+   expect(res.status.calledWith(200)).to.be.true;
+   expect(res.json.calledWithMatch({ success:true,message: 'supprimé avec succès' }))
   });
-  it("PUT /:id", async () => {
-    console.log("Test update food");
-    const body = {
-      name: "pizza",
-      price: "15",
-    };
-    console.log("update food called");
-    const res = await request(app).put(`/food/${createdFoodId}`).send(body);
+  it("should delete a food item and returns 404 doesn't exist", async () => {
+    const idToDelete=new mongoose.Types.ObjectId();
+    const req={
+      params:{id:idToDelete.toString()}
+    }
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
 
-    expect(res.status).to.equal(200);
-
-    expect(res.body).to.have.property("food");
+    }
+   
+   
+    const findByIdAndDelete=sinon.stub(Food, 'findByIdAndDelete').resolves(null);
+  
+  await deletefood(req,res);
+   
+   expect(res.status.calledWith(404)).to.be.true;
+   expect(res.json.calledWithMatch({ message: 'Plat non trouvé' }))
   });
-  it("Returns all categories", async () => {
-    console.log("Test food categories");
+  it("should update a food item and returns 200", async () => {
+    const idToUpdate=new mongoose.Types.ObjectId();
+    const req={
+      params:{id:idToUpdate.toString()},
+      body:{
+       name:"Pizza"
+      }
+    }
+    const updatedFood={
+      _id: idToUpdate.toString(),
+      name: "Pizza",
+      price: 12.5,
+      description: "Vegetarian pizza",
+      category: "Pizza",
+      image:"pizza.png"
+    }
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
 
-    const res = await request(app)
-      .get(`/food/getallcategories`)
-      .set("Content-Type", "application/json");
-
-    expect(res.status).to.equal(200);
-    expect(res.body).to.have.property("success", true);
-
-    expect(res.body).to.have.property("uniqueCategories").that.is.an("array");
+    }
+   
+   
+    const findByIdAndUpdate=sinon.stub(Food, 'findByIdAndUpdate').resolves(updatedFood);
+  
+  await updatefood(req,res);
+   expect(findByIdAndUpdate.calledWith(idToUpdate.toString(),{name:"Pizza"})).to.be.true;
+   expect(res.status.calledWith(200)).to.be.true;
+   expect(res.json.calledWithMatch({ message: ' mis à jour avec succès', food: updatedFood }))
   });
-  it("Returns Category Pizza", async () => {
-    console.log("Test food category Pizza");
+  it("should update a food item and returns 404 because it doesn't exist", async () => {
+    const idToUpdate=new mongoose.Types.ObjectId();
+    const req={
+      params:{id:idToUpdate.toString()},
+      body:{
+       name:"Pizza"
+      }
+    }
+   
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
 
-    const category = "Pizza";
-    const res = await request(app)
-      .get(`/food/category/${category}`)
-      .set("Content-Type", "application/json");
+    }
+   
+   
+    sinon.stub(Food, 'findByIdAndUpdate').resolves(null);
+  
+  await updatefood(req,res);
 
-    expect(res.status).to.equal(200);
-    expect(res.body).to.have.property("success", true);
-
-    expect(res.body).to.have.property("foods").that.is.an("array");
+   expect(res.status.calledWith(404)).to.be.true;
+   expect(res.json.calledWithMatch({ message: 'Plat non trouvé' }))
   });
-  it("Returns Food by id", async () => {
-    const res = await request(app)
-      .get(`/food/Food/${createdFoodId}`)
-      .set("Content-Type", "application/json");
+  it("fetch all food and return 200",async()=>{
+    const req={}
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
+    }
+    const foodList={
+      _id: new mongoose.Types.ObjectId().toString()
+    }
+    sinon.stub(Food,'find').resolves(foodList)
+    await getAllfoods(req,res);
+    expect(res.status.calledWith(200))
+    expect(res.json.calledWithMatch({success:true,foods:foodList})).to.be.true;
+    Food.find.restore();
+  })
+  it("filter food by category and returns 200",async()=>{
+    const req=
+    {params:{
+      category:"pizza"
+    }}
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
+    }
+    const List=
+    [{
+      _id: "id food_1",
+      name: "Pizza",
+      price: 12.5,
+      description: "Vegetarian pizza",
+      category: "Pizza",
+      image:"pizza.png"}
+    ]
 
-    expect(res.status).to.equal(200);
-    expect(res.body).to.have.property("success", true);
-    expect(res.body).to.have.property("food");
-  });
-  it("Deletes Food by id", async () => {
-    const res = await request(app)
-      .delete(`/food/${createdFoodId}`)
-      .set("Content-Type", "application/json");
+    const findStub=sinon.stub(Food, 'find').resolves(List)
+    await filterfood(req,res);
+    expect(findStub.calledWith({category:"pizza"})).to.be.true;
+    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWithMatch({success:true,foods:List})).to.be.true;
+    findStub.restore();
+  })
+  it ("Returns all categories with status 200",async()=>{
+    const req={}
+    const res={
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
+    }
+    const foodList = [
+      { category: "Pizza" },
+      { category: "Tacos" },
+      { category: "Pizza" },
+      { category: "Soda" }
+    ];
+    const ListCategories=[
+      "Pizza", "Tacos", "Soda"
+    ]
+    sinon.stub(Food,'find').resolves(foodList);
+    await getAllCategories(req,res)
+    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWithMatch({success:true, uniqueCategories:ListCategories })).to.be.true;
+    Food.find.restore();
+    
 
-    expect(res.status).to.equal(200);
-    expect(res.body).to.have.property("success", true);
-  });
+  })
+  it ("Returns food by id with status 200",async()=>{
+    const id=new mongoose.Types.ObjectId
+    const req={
+      params:{
+        id: id.toString()
+      }
+    }
+    const FoodToSend={
+      _id: id.toString(),
+      name: "Pizza",
+      price: 12.5,
+      description: "Vegetarian pizza",
+      category: "Pizza",
+      image:"pizza.png"
+    }
+    const res=
+    { 
+      status:sinon.stub().returnsThis(),
+      json:sinon.stub()
+ 
+    }
+    const findbyid=sinon.stub(Food,'findById').resolves(FoodToSend)
+    await getfood(req,res)
+    expect (findbyid.calledWith(id.toString())).to.be.true;
+    expect(res.status.calledWith(200)).to.be.true;
+    expect(res.json.calledWithMatch({success:true,food:FoodToSend})).to.be.true;
+  })
 });

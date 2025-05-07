@@ -1,3 +1,5 @@
+
+require('dotenv').config();
 const  userModel=require ("../Models/User");
 const  jwt =require ('jsonwebtoken');
 const bcrypt =require ('bcrypt');
@@ -11,13 +13,13 @@ const loginUser = async (req, res)=>{
     try{
       const user= await userModel.findOne({email});
     if (!user){
-        return res.json({success:false, message:"User doesn't exist"})
+        return res.status(400).json({success:false, message:"User doesn't exist"})
     }
      
 
     const isMatch=await bcrypt.compare(password, user.password);
     if (!isMatch){
-        return res.json({success:false,message:"Invalid credentials" })
+        return res.status(400).json({success:false,message:"Invalid credentials" })
     }
     const token= createToken(user._id);
     res.status(200).json({success:true, token})
@@ -62,17 +64,16 @@ const registerUser = async (req, res)=>{
         email:email,
         password:hashedPassword,
         fullname:fullname,
-       
         phone:phone,
         address:address,
         city:city,
         country:country,
       
-
-
     })
+    console.log("new user:",newUser);
     const user=await newUser.save()
     const token =createToken(user._id)
+    console.log(token);
     res.status(201).json({success:true, token})
 }
     
@@ -85,9 +86,9 @@ const getUser=async (req, res)=>{
     
         try{
          const id = req.params.id;
-        const user=await userModel.findById(id).select("-password -__v")
+        const user=await userModel.findById(id);
         if (!user){
-            return res.json({success:false, message:"User not found"})
+            return res.status(404).json({success:false, message:"User not found"})
         }
         res.status(200).json({success:true, user})
     }
@@ -99,10 +100,10 @@ const getUser=async (req, res)=>{
 const updateUser=async (req, res)=>{
     const {id}=req.params;
     try{
-        const user=await userModel.findById(id).select("-password -__v")
-        console.log(req.body)
+        const user=await userModel.findById(id);
+        console.log("editing with:",req.body)
         if (!user){
-            return res.json({success:false, message:"User not found"})
+            return res.status(400).json({success:false, message:"User not found"})
         }
         //validating email format & strong password 
         else{
@@ -145,4 +146,4 @@ const getAllUsers=async (req, res)=>{
     }
 }
 
-module.exports={loginUser, registerUser, getUser, updateUser, deleteUser, getAllUsers}
+module.exports={loginUser,createToken, registerUser, getUser, updateUser, deleteUser, getAllUsers}

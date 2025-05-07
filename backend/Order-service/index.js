@@ -5,13 +5,14 @@ const orderRoutes = require('./Routes/orderRoutes');
 const { ErrorHandler } = require('./middlewares/ErrorHandler');
 const { connectDB } = require('./db');
 
-const cors = require('cors')
+const cors = require('cors');
+const morgan = require('morgan');
 
-app.use(express.json()); // Pour parser les données JSON
-app.use('/order', orderRoutes); // Chaque service a son propre préfixe d'API
+app.use(express.json()); 
+app.use('/order', orderRoutes); 
 app.use(ErrorHandler);
 app.use(cors())
-
+app.use(morgan('dev'));
 
 
 module.exports = {app,connectDB};
