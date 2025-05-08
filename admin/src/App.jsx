@@ -9,6 +9,7 @@ import EditfoodForm from './Components/EditFoodForm'
 import ListFood from './Components/ListFood'
 import ProtectedRoute from './Components/ProtectedRoutes'
 import Login from './Components/Login'
+import LoginRoute from './Components/LoginRoute'
 
 const App = () => {
   const location = useLocation();
@@ -20,7 +21,7 @@ const App = () => {
       {!isLoginPage && <Navbar />}
         <main className="flex-1 p-4 overflow-y-auto bg-gray-100">
           <Routes>
-          <Route path="/" element={<Login/>}/>
+          <Route path="/" element={<LoginRoute><Login/></LoginRoute>}/>
           <Route path="/addfood" element={<ProtectedRoute><AddfoodForm/></ProtectedRoute>} />
           <Route path="/editfood" element={<ProtectedRoute><EditfoodForm/></ProtectedRoute>} />
          

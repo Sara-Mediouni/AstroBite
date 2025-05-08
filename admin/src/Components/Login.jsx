@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import {useNavigate} from 'react-router-dom';
 const Login = () => {
@@ -12,6 +12,12 @@ const Login = () => {
     setForm({...form,[e.target.name]:e.target.value})
   
   };
+  useEffect(() => {
+    const token = localStorage.getItem("admin");
+    if (token) {
+      navigate("/food"); 
+    }
+  }, [navigate]);
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(form)

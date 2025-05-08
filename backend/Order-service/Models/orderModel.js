@@ -10,7 +10,8 @@ const orderSchema=new mongoose.Schema({
     status:{type:String, default:"Pending"},
     date:{type:Date, default:Date.now()},
     payment:{type:Boolean, default:false}
-})
+
+}, { timestamps: true })
 
 const orderModel=mongoose.models.order || mongoose.model("order",orderSchema)
 module.exports=orderModel
