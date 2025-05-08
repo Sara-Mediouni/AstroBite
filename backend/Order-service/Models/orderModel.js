@@ -5,7 +5,7 @@ const orderSchema=new mongoose.Schema({
     {item:{type:mongoose.Types.ObjectId,ref:"food"},
     size:String,
     topping:String ,
-quantity:Number }],
+    quantity:Number }],
     amount:{type:Number, required:true},
     status:{type:String, default:"Pending"},
     date:{type:Date, default:Date.now()},

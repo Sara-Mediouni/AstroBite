@@ -1,17 +1,26 @@
-import React from 'react'
+import React from "react";
 
 const Navbar = () => {
+  const handleLogout = () => {
+    localStorage.clear();
+  };
   return (
     <nav className="bg-transparent shadow px-6 py-4">
-    <div className="flex justify-between items-center">
-      <h2 className="text-2xl font-bold text-yellow-500">Admin Panel</h2>
-      <div className="space-x-4">
-        <button className="bg-gray-100 px-4 py-2 rounded">Settings</button>
-        <button className="bg-yellow-200 text-white px-4 py-2 rounded">Logout</button>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold text-yellow-500">Admin Panel</h2>
+        <div className="space-x-4">
+          <button className="bg-gray-100 px-4 py-2 rounded">Settings</button>
+          <button
+            onClick={handleLogout}
+            className="bg-yellow-200 text-white px-4 
+        py-2 rounded"
+          >
+            Logout
+          </button>
+        </div>
       </div>
-    </div>
-  </nav>
-  )
-}
+    </nav>
+  );
+};
 
-export default Navbar
+export default Navbar;

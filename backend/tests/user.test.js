@@ -28,8 +28,7 @@ describe('USER ROUTES', function () {
         fullname: "Test User",
         phone: "123456789",
         address: "123 Test Street",
-        city: "Test City",
-        country: "Test Country"
+        city: "Test City"
       }
     };
   
@@ -63,8 +62,7 @@ describe('USER ROUTES', function () {
         fullname: "Existing User",
         phone: "123456789",
         address: "123 Test Street",
-        city: "Test City",
-        country: "Test Country"
+        city: "Test City"
       }
     };
   
@@ -141,8 +139,7 @@ describe('USER ROUTES', function () {
         fullname: "Test User",
         phone: "123456789",
         address: "123 Test Street",
-        city: "Test City",
-        country: "Test Country"
+        city: "Test City"
       }
     };
   
@@ -176,8 +173,7 @@ describe('USER ROUTES', function () {
         fullname: "Test User",
         phone: "123456789",
         address: "123 Test Street",
-        city: "Test City",
-        country: "Test Country"
+        city: "Test City"
       };
     
       const findByIdAndUpdateStub = sinon.stub(userModel, 'findByIdAndUpdate').resolves(updatedUser);

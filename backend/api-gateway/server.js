@@ -12,15 +12,7 @@ app.use(cors());
 app.use('/user', createProxyMiddleware({ target: process.env.USER_SERVICE_URL, changeOrigin: true }));
 app.use('/order', createProxyMiddleware({ target: process.env.ORDER_SERVICE_URL, changeOrigin: true }));
 app.use('/food', createProxyMiddleware({ target: process.env.FOOD_SERVICE_URL, changeOrigin: true }));
-{/*
-app.get('/users', async (req, res) => {
-  try {
-    const response = await axios.get('http://user-service:4001/users');
-    res.json(response.data);
-  } catch (err) {
-    res.status(500).json({ error: 'User service error' });
-  }
-});*/}
+
 
 
 const port=4000

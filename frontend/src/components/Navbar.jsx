@@ -4,7 +4,6 @@ import { StoreContext } from "../context/StoreContext";
 import { useDispatch, useSelector } from "react-redux";
 import { clearToken } from "../redux/authSlice";
 import { RiAliensLine } from "react-icons/ri";
-import {RxAvatar} from 'react-icons/rx'
 import LoginPopup from "./LoginPopup";
 import { Link} from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
@@ -23,7 +22,7 @@ const Navbar = ({ onCartClick,onMobileMenuClick }) => {
      navigate('/')
    };
    const togglePopupType = (newType) => {
-     setType(newType); // Change le type de popup (Login ou Signup)
+     setType(newType); 
    };
   return (
     <header className="min-w-screen fixed bg-white/20 top-0 left-0 z-50  shadow-md ">

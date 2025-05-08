@@ -111,7 +111,6 @@ fireEvent.change(confirmPasswordInput, {
       phone:"12523123",
       city:"abc123123",
       address:"abc123123",
-      country:"France",
       fullname:"abc123123"
      }
   )

@@ -8,7 +8,7 @@ const MyOrders = () => {
   const getmyorders=()=>{
     axios.get(`http://localhost:4000/order/order/userorders/${userId}`)
     .then((response)=>
-      {setOrders(response.data.data);
+      {setOrders(response.data);
       console.log(response.data)
     })
     .catch((error)=>console.log(error))
@@ -17,7 +17,7 @@ const MyOrders = () => {
     axios.post(`http://localhost:4000/order/order/status`,{orderId,newStatus})
     .then((response)=>
       {getmyorders();
-      console.log(response.data)
+      console.log(response.orders)
     })
     .catch((error)=>console.log(error))
   }

@@ -6,6 +6,8 @@ import { MdOutlineEditCalendar } from "react-icons/md";
 import {FaTrash} from 'react-icons/fa'
 const ListFood = () => {
   const [foods,setfoods]=useState([])
+  const token=localStorage.getItem('admin')
+
   const getfood=()=>{
     axios.get('http://localhost:4000/food/food/')
     .then((response)=>{
@@ -15,7 +17,12 @@ const ListFood = () => {
     })
   }
   const handleDelete=(foodId)=>{
-    axios.delete(`http://localhost:4000/food/food/${foodId}`)
+    axios.delete(`http://localhost:4000/food/admin/${foodId}`,{
+      headers: {
+        'Authorization':`Bearer ${token}`
+        
+      }
+    })
     .then((response)=>{
      console.log(response)
      toast.success("food Deleted Successfully")

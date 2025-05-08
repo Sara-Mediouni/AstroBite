@@ -11,7 +11,7 @@ const AddfoodForm = () => {
     rating:''
   
   });
-
+  const token=localStorage.getItem('admin')
   const handleChange = (e) => {
     const { name, value, files, type, checked } = e.target;
     const val = type === 'checkbox' ? checked : type === 'file' ? files[0] : value;
@@ -27,8 +27,8 @@ const AddfoodForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const data = new FormData();
-
-    // Append all fields
+    
+   
     Object.entries(formData).forEach(([key, value]) => {
       if (value !== '' && value !== null) {
         data.append(key, value);
@@ -36,14 +36,15 @@ const AddfoodForm = () => {
     });
 
     try {
-      await axios.post('http://localhost:4000/food/food/', data, {
+      await axios.post('http://localhost:4000/food/admin/', data, {
         headers: {
+          'Authorization':`Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
         },
       });
       alert('food Added Successfully');
     } catch (err) {
-      console.error('Error uploading food:', err);
+      console.log('Error uploading food:', err);
       alert('Error uploading food');
     }
   };

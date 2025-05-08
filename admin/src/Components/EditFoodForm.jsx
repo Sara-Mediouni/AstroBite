@@ -10,6 +10,7 @@ const EditfoodForm = () => {
     const val = type === 'checkbox' ? checked : type === 'file' ? files[0] : value;
     setfood((prev) => ({ ...prev, [name]: val }));
   };
+  const token=localStorage.getItem('admin')
 
  
   const getfood=()=>{
@@ -23,7 +24,12 @@ const EditfoodForm = () => {
   }
   const updatefood=async(e)=>{
     e.preventDefault();
-    await axios.put(`http://localhost:4000/food/food/${foodId}`,food)
+    await axios.put(`http://localhost:4000/food/admin/${foodId}`,food,
+      {headers: {
+        'Authorization':`Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
+      }},
+    )
   .then((res)=>
     {console.log(res);
         toast.success('food updated successfully!')})

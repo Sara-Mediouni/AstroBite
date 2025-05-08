@@ -95,8 +95,8 @@ const userOrders = async (req, res) => {
                 );
                 console.log(itemData)
                 return {
-                  ...itemObj,
-                  item: itemData.data,
+                  quantity:itemObj.quantity,
+                  item: itemData.data.food
                 };
               } catch (error) {
                 console.log(
@@ -119,7 +119,7 @@ const userOrders = async (req, res) => {
       })
     );
 
-    res.status(200).json({ success: true, data: orders });
+    res.status(200).json(orders);
   } catch (error) {
     console.log(error);
     res.status(500).json({ success: false, message: "Error" });
@@ -138,7 +138,7 @@ const listOrders = async (req, res) => {
           const userResponse = await axios.get(
             `http://localhost:4000/user/user/getuser/${order.userId}`
           );
-          userData = userResponse.data;
+          userData = userResponse.data.user;
         } catch (err) {
           console.error(
             `Erreur récupération user ${order.userId}:`,
@@ -153,8 +153,8 @@ const listOrders = async (req, res) => {
                 `http://localhost:4000/food/food/Food/${itemObj.item}`
               );
               return {
-                ...itemObj,
-                item: itemResponse.data,
+                quantity:itemObj.quantity,
+                item: itemResponse.data.food
               };
             } catch (err) {
               console.error(
@@ -174,7 +174,7 @@ const listOrders = async (req, res) => {
       })
     );
 
-    res.status(200).json({success:true, data: orders });
+    res.status(200).json(orders);
   } catch (err) { 
     res.status(500).json({ message: "Erreur serveur", error: err.message });
   }
@@ -191,9 +191,18 @@ const updateStatus = async (req, res) => {
     res.status(500).json({ success: false, message: "Error updating status" });
   }
 };
-
+const deleteOrder = async (req, res) => {
+  try {
+    await orderModel.findByIdAndDelete(req.params.orderId);
+    res.status(200).json({ success: true, message: "Order Deleted" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ success: false, message: "Error deleting order" });
+  }
+};
 module.exports = {
   listOrders,
+  deleteOrder,
   placeOrder,
   verifyOrder,
   updateStatus,

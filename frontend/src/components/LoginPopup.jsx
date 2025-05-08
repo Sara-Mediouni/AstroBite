@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { AnimatePresence ,motion} from "framer-motion";
-import { IoClose } from "react-icons/io5";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setToken, setUser } from "../redux/authSlice";
 import { jwtDecode } from "jwt-decode";
@@ -12,7 +11,6 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
   const [error, setError] = useState(""); // Ajout d'un état pour les erreurs
   const url = type === "Login" ? "login" : "register";
   const navigate = useNavigate();
-  const countries = useSelector((state) => state.country.countries);
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -82,7 +80,9 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             {type === "Signup" && (
               <>
+              <label className="label-input block" for="fullname">Full Name</label>
                 <input
+                  id="fullname"
                   type="text"
                   value={form?.fullname}
                   placeholder="Full Name"
@@ -91,7 +91,10 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
                   className="input-style"
                 />
                 <div className="grid grid-cols-2 gap-5">
+                <div className="flex flex-col gap-3 justify-center items-start">
+                <label className="label-input block" for="city">City</label>
                   <input
+                    id="city"
                     type="text"
                     name="city"
                     value={form?.city}
@@ -99,7 +102,12 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
                     onChange={handleChange}
                     className="input-style"
                   />
+
+                  </div>
+                  <div className="flex flex-col gap-3 justify-center items-start">
+                  <label className="label-input" for="address">Adress</label>
                   <input
+                    id="address"
                     type="text"
                     name="address"
                     value={form?.address}
@@ -108,7 +116,9 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
                     className="input-style"
                   />
                 </div>
-                <div className="grid grid-cols-2 gap-5">
+                </div>
+               
+                <label className="label-input">Phone</label>
                   <input
                     type="text"
                     name="phone"
@@ -117,22 +127,11 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
                     onChange={handleChange}
                     className="input-style"
                   />
-                  <select
-                    name="country"
-                    value={form?.country}
-                    onChange={handleChange}
-                    className="input-style"
-                    placeholder="Country"
-                  >
-                    {countries.map((country, index) => (
-                      <option key={index} value={country}>
-                        {country}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                
+            
               </>
             )}
+            <label className="label-input">Email</label>
             <input
               type="email"
               placeholder="Email"
@@ -141,6 +140,7 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
               value={form?.email}
               className="input-style"
             />
+             <label className="label-input">Password</label>
             <input
               type="password"
               name="password"
@@ -150,13 +150,14 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
               className="input-style"
             />
             {type === "Signup" && (
+             <> <label className="label-input">Confirm Password</label>
               <input
                 type="password"
                 placeholder="Confirm Password"
                 value={form?.confirmPassword}
                 name="confirmPassword"
                 className="input-style"
-              />
+              /></>
             )}
             <button
               type="submit"
@@ -168,7 +169,7 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
   
           {/* Error messages */}
           {error && (
-            <div className="mt-4 p-3 text-yellow-600 bg-yellow-100 rounded-lg text-center">
+            <div data-testid="error" className="mt-4 p-3 text-yellow-600 bg-yellow-100 rounded-lg text-center">
               {error}
             </div>
           )}

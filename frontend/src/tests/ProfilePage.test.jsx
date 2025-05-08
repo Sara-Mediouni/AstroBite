@@ -14,7 +14,6 @@ const fakeUser = {
   fullname: "abc",
   city: "abc",
   address: "abc",
-  country: "Tunisia",
 };
 const updatedUser = {
     email: "alo@gmail.com",
@@ -22,7 +21,6 @@ const updatedUser = {
     fullname: "abc",
     city: "abc",
     address: "abc123123",
-    country: "Tunisia",
   };
 describe("Profile Page", () => {
   beforeEach(() => {

@@ -163,8 +163,7 @@ describe("ORDER CONTROLLER - Unit Tests", () => {
           fullname: "Test User",
           phone: "123456789",
           address: "123 Test Street",
-          city: "Test City",
-          country: "Test Country"
+          city: "Test City"
         }
         const orders=[
           { _id: orderId.toString(),

@@ -14,6 +14,7 @@ import Menu from './pages/Menu'
 import ProfilePage from './pages/Profile'
 import MyOrders from './pages/MyOrders'
 import VerifyOrder from './pages/verify'
+import ProtectedRoute from './components/ProtectedRoutes'
 const App = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
@@ -45,9 +46,9 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/menu" element={<Menu />} />
-            <Route path="/myprofile" element={<ProfilePage />} />
-            <Route path="/myorders" element={<MyOrders />} />
-            <Route path="/verify" element={<VerifyOrder />} />
+            <Route path="/myprofile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
+            <Route path="/myorders" element={<ProtectedRoute><MyOrders /></ProtectedRoute>} />
+            <Route path="/verify" element={<ProtectedRoute><VerifyOrder /></ProtectedRoute>} />
           </Routes>
       
         <Footer/>

@@ -1,19 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 
 const ProfilePage = () => {
   const [UserData, setUserData] = useState({})
   const user=localStorage.getItem('user')
-  const countries = useSelector((state) => state.country.countries);
 
  
   const [isEditing, setIsEditing] = useState(false);
   const [profile, setProfile] = useState({
     fullname: "",
-    country:"",
     city:"",
-
     email: "",
     phone: "",
     address: "",
@@ -85,26 +81,7 @@ const ProfilePage = () => {
               />
             </div>
           ))}
-          <div>
-            <label className="block text-brown-500 font-medium mb-1">Country</label>
-            <select
-             
-              name="country"
-              
-              onChange={handleChange}
-              readOnly={!isEditing}
-              className={`w-full px-4 py-2 rounded-xl bg-white/5 border border-yellow-400/20 text-black placeholder-gray-400 focus:outline-none transition-all duration-200 ${
-                  isEditing
-                    ? "focus:ring-2 focus:ring-yellow-400"
-                    : "cursor-default"
-                }`}
-            >
-              <option>Select country</option>
-              {countries.map((country,index)=> 
-              <option key={index} value={country}>{country}</option>)}
-             
-            </select>
-          </div>
+       
         </div>
 
         <div className="mt-10 flex justify-center">

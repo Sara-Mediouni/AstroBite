@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
 const foodRoutes = require('./Routes/FoodRoutes');
+const AdminRoutes=require('./Routes/AdminRoutes')
 const { ErrorHandler } = require('./middleware/ErrorHandler');
 const { connectDB } = require('./db');
 const cors = require('cors')
@@ -11,6 +12,7 @@ const env=require ('dotenv').config();
 const morgan = require('morgan');
 app.use(bodyParser.json()); // Pour parser les données JSON
 app.use('/food', foodRoutes); // Chaque service a son propre préfixe d'API
+app.use('/admin',AdminRoutes)
 app.use(ErrorHandler);
 app.use(cors());
 

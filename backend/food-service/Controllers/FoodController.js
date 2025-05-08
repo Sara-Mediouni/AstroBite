@@ -3,10 +3,11 @@ const FoodModel = require('../Models/FoodSchema');
 
 // Ajouter un plat
 const addfood = async (req, res) => {
-  try { 
-    const food=await FoodModel.find({name:req.body.name})
+  try {
+    console.log(req.body) 
+    const food=await FoodModel.findOne({name:req.body.name})
     if (!food)
-    { console.log(req.body)
+    { 
     let image_filename=`${req.file.filename}`;
     
     const newFood = new FoodModel
@@ -20,7 +21,7 @@ const addfood = async (req, res) => {
     await newFood.save();
     res.status(201).json({success:true,newFood});}
     else {
-      res.status(400).json({success:false,message:"Food already exists"})
+      res.status(400).json({success:false, message:"Food already exists"})
     }
   } catch (err) {
     console.error(err);
@@ -44,17 +45,33 @@ const deletefood = async (req, res) => {
 // Mettre à jour un plat
 const updatefood = async (req, res) => {
   try {
-    const updatedfood = await FoodModel.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    if (!updatedfood) {
-      return res.status(404).json({ message: 'Plat non trouvé' });
+    const updateData = { ...req.body };
+
+    
+    if (req.file) {
+      updateData.image = req.file.filename; 
     }
-    res.status(200).json({ message: ' mis à jour avec succès', food: updatedfood });
+
+    const updatedfood = await FoodModel.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
+    if (!updatedfood) {
+      return res.status(404).json({ message: "Plat non trouvé" });
+    }
+
+    res.status(200).json({
+      message: "Mis à jour avec succès",
+      food: updatedfood,
+    });
   } catch (error) {
-    res.status(500).json({ message: 'Erreur lors de la mise à jour', error });
+    res.status(500).json({ message: "Erreur lors de la mise à jour", error });
   }
 };
 
-// Récupérer tous les plats
+
 const getAllfoods = async (req, res) => {
    try {
      const foods = await FoodModel.find();
@@ -85,7 +102,7 @@ const getAllCategories = async (req, res) => {
   try {
     
     
-    // Utilisation de .lean() pour obtenir des objets JavaScript simples
+  
     const food = await FoodModel.find().lean(); 
     console.log(food);
     

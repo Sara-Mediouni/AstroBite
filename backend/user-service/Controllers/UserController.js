@@ -40,7 +40,7 @@ const createToken=(id)=>{
 //register user
 const registerUser = async (req, res)=>{
     const { email, password, fullname,
-        phone, address, city, country}=req.body;
+        phone, address, city}=req.body;
     try{
         //checking is user already exists
         const exists=await userModel.findOne({
@@ -66,8 +66,7 @@ const registerUser = async (req, res)=>{
         fullname:fullname,
         phone:phone,
         address:address,
-        city:city,
-        country:country,
+        city:city
       
     })
     console.log("new user:",newUser);
@@ -145,5 +144,14 @@ const getAllUsers=async (req, res)=>{
         res.status(500).json({success:false, error})
     }
 }
+const loginAdmin=async(req, res)=>{
+    try{
+    const token=await loginAdmin(req.body);
+    res.json({ token });
+} catch (err) {
+  res.status(401).json({ message: err.message });
+}}
+
+ 
 
 module.exports={loginUser,createToken, registerUser, getUser, updateUser, deleteUser, getAllUsers}
