@@ -51,7 +51,7 @@ const ProfilePage = () => {
   };
   useEffect(()=>{
     getuser();
-   },[user])
+   },[])
    useEffect(()=>{
      console.log(UserData)
      
@@ -67,10 +67,11 @@ const ProfilePage = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {["fullname", "email", "phone", "address","city"].map((field) => (
             <div key={field}>
-              <label className="block text-sm font-semibold text-yellow-300 mb-1 capitalize">
+              <label for={field} className="block text-sm font-semibold text-yellow-300 mb-1 capitalize">
                 {field}
               </label>
               <input
+                id={field}
                 type={field === "email" ? "email" : "text"}
                 name={field}
                 value={profile[field]}

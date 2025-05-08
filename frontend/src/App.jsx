@@ -33,11 +33,11 @@ const App = () => {
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-br from-black via-gray-900 to-gray-800 ">
     <main className="flex-grow">
-    <Navbar  cartCount={cartItems.length}
+    <Navbar cartCount={cartItems.length}
         onCartClick={() => setCartOpen(true)}
         onMobileMenuClick={() => setMobileOpen(true)}/>
       <MobileMenu isOpen={mobileOpen} onClose={() => setMobileOpen(false)} />
-      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} cartItems={cartItems} />
+      <CartDrawer isOpen={cartOpen} onClose={() => setCartOpen(false)} cart={cartItems} />
       <Routes>
    
             <Route path="/" element={<Home />} />

@@ -17,8 +17,6 @@ const chaiAsPromised = require("chai-as-promised");
 chai.use(chaiAsPromised);
 
 const orderModel = require("../Order-service/Models/orderModel");
-const { getUser } = require("../user-service/Controllers/UserController");
-const { getfood } = require("../food-service/Controllers/FoodController");
 
 describe("ORDER CONTROLLER - Unit Tests", () => {
   afterEach(() => sinon.restore());
@@ -78,7 +76,7 @@ describe("ORDER CONTROLLER - Unit Tests", () => {
   });
 
 
-    it("should return a list of orders", async () => {
+    it("should return a list of orders with status 200", async () => {
       const id_1=new mongoose.Types.ObjectId;
       const id_2=new mongoose.Types.ObjectId;
       const id=new mongoose.Types.ObjectId;
@@ -139,7 +137,8 @@ describe("ORDER CONTROLLER - Unit Tests", () => {
  
 
  
-    it("should return user-specific orders", async () => {
+    it("should return user-specific orders with 200", 
+      async () => {
    
         const id = new mongoose.Types.ObjectId();
         const itemId = new mongoose.Types.ObjectId();

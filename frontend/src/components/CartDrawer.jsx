@@ -1,36 +1,39 @@
-import React, { useContext, useState } from "react";
+import React, { memo, useContext, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate } from "react-router-dom";
+
 import { StoreContext } from "../context/StoreContext";
 import axios from "axios";
 import Swal from 'sweetalert2'
 
-const CartDrawer = ({ isOpen, onClose, cartItems}) => {
+const CartDrawer = React.memo(({ isOpen, onClose, cart}) => {
   const user=localStorage.getItem('user')
  
   const token =localStorage.getItem('token')
-  const [orderData, setorderData] = useState()
-  console.log(cartItems)
-  const {food_list,removeFromCart,addToCart,getTotalCartAmount}=useContext(StoreContext)
-  const handleOrder=()=>{
-    let orderItems=[];
-    food_list.map((item)=>{
-    if (cartItems[item._id]?.quantity>0){
-      let itemInfo=item;
-      itemInfo["quantity"]=cartItems[item._id].quantity;
  
-      orderItems.push(itemInfo);
-    }
-    })
-    setorderData({userId:user,items:orderItems,amount:getTotalCartAmount()})
-    console.log(orderItems);
-   
-    
-  }
+  console.log(cart)
+  const {food_list,removeFromCart,addToCart,getTotalCartAmount}=useContext(StoreContext)
+ 
   const checkout=async()=>{
     try {
-      await handleOrder(); // Assure que les données sont bien prêtes
-      const response = await axios.post("http://localhost:4000/order/order/place", orderData);
+      let orderItems = [];
+  
+      food_list.forEach((item) => {
+        if (cart[item._id]?.quantity > 0) {
+          orderItems.push({
+            ...item,
+            quantity: cart[item._id].quantity,
+          });
+        }
+      });
+  
+      const payload = {
+        userId: user,
+        items: orderItems,
+        amount: getTotalCartAmount(),
+      }; // Assure que les données sont bien prêtes
+      const response = await 
+      axios.post("http://localhost:4000/order/order/place",
+         payload);
       
       console.log(response);
   
@@ -76,12 +79,12 @@ const CartDrawer = ({ isOpen, onClose, cartItems}) => {
           </div>
   
           {/* Content */}
-          {Object.keys(cartItems).length === 0 ? (
+          {Object.keys(cart).length === 0 ? (
             <p className="text-[#f3e1d1] mt-14 text-center">Your Cart is Empty.</p>
           ) : (
             <div className="flex-1 overflow-y-auto mt-10 space-y-6 pr-2">
               {food_list?.map((item, idx) => {
-                if (cartItems[item._id]?.quantity > 0)
+                if (cart[item._id]?.quantity > 0)
                   return (
                     <div
                       key={idx}
@@ -96,7 +99,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems}) => {
                               className="bg-[#eee0d9] text-[#2b1e17] px-2 rounded-full text-sm"
                               onClick={() => removeFromCart(item._id)}
                             >−</button>
-                            <span className="font-medium text-[#f3e1d1]">{cartItems[item._id].quantity}</span>
+                            <span className="font-medium text-[#f3e1d1]">{cart[item._id].quantity}</span>
                             <button
                               className="bg-[#eee0d9] text-[#2b1e17] px-2 rounded-full text-sm"
                               onClick={() => addToCart(item._id)}
@@ -106,7 +109,7 @@ const CartDrawer = ({ isOpen, onClose, cartItems}) => {
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="text-[#f3e1d1] font-bold">{(item.price * cartItems[item._id].quantity).toFixed(2)} TND</p>
+                        <p className="text-[#f3e1d1] font-bold">{(item.price * cart[item._id].quantity).toFixed(2)} TND</p>
                         <button
                           className="text-yellow-500 text-xs hover:underline"
                           onClick={() => removeFromCart(item._id)}
@@ -147,6 +150,6 @@ const CartDrawer = ({ isOpen, onClose, cartItems}) => {
   </AnimatePresence>
   
   );
-};
+});
 
 export default CartDrawer;

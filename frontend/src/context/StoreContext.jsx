@@ -56,10 +56,15 @@ const StoreContextProvider = (props) => {
     });
   };
   
-  const fetchDrinkList=async()=>{
-    const response=await axios.get("http://localhost:4000/food/food/");
-    setFoodList(response.data)
-    console.log(response.data)
+  const fetchFoodList=async()=>{
+   await axios.get("http://localhost:4000/food/food/")
+    .then((response)=>
+      {setFoodList(response.data.foods)
+    console.log(response.data)})
+    .catch((error)=>{
+      console.log(error)
+    })
+    
 }
   const getTotalCartAmount = () => {
     let totalAmount = 0;
@@ -71,7 +76,7 @@ const StoreContextProvider = (props) => {
         }
       }
     }
-    return totalAmount;
+    return totalAmount.toFixed(2);
   };  
   useEffect(() => {
     if (Object.keys(cartItems).length > 0) {
@@ -81,7 +86,7 @@ const StoreContextProvider = (props) => {
   useEffect(()=>{
     
     async function loadData(){
-      await fetchDrinkList();
+      await fetchFoodList();
    
 
   }loadData();

@@ -33,16 +33,13 @@ export default function Menu() {
       console.log('Error',error)
     })
   }
-  useEffect(()=>{
-    
-  },[])
+ 
   useEffect(() => {
-    const fetchData = async () => {
-      await getFood();
-      await getCategories();
-    };
+    getCategories();
+  }, []);
   
-    fetchData();
+  useEffect(() => {
+    getFood(); 
   }, [category]);
   
     return (
@@ -55,7 +52,7 @@ export default function Menu() {
         <div className="flex flex-wrap justify-center gap-6">
           {Categories?.map((cat,idx) => (
             <button
-              key={idx}
+              key={cat}
               onClick={()=>setCategory(cat)}
               className="bg-white/10 border border-yellow-400/30 text-yellow-100 px-5 py-2 rounded-full text-sm font-medium hover:bg-yellow-300 hover:text-black hover:shadow-[0_0_10px_#facc15] transition-all duration-300"
             >

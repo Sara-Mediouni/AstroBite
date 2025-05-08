@@ -1,23 +1,25 @@
 // MenuPage.test.jsx
 import { render, screen, fireEvent,  } from "@testing-library/react";
-import MenuPage from "../pages/Menu";
+
 import axios from "axios";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { StoreContext } from "../context/StoreContext";
+import Menu from "../pages/Menu";
 
 vi.mock("axios");
 
 describe("MenuPage", () => {
-  const fakeFood = [
+  const foods = [
     { _id: "1", name: "Sushi Roll",category:"Japanese", price: "15.00", image: "sushi.jpg" },
     { _id: "2", name: "Ramen Bowl",category:"Japanese", price: "12.00", image: "ramen.jpg" },
   ];
-  const fakeCategories = ["Japanese", "Noodles"];
+  const uniqueCategories = ["Japanese", "Noodles"];
+
 
   beforeEach(() => {
     axios.get.mockImplementation((url) => {
-      if (url.includes("/getallcategories")) return Promise.resolve({ data: fakeCategories });
-      if (url.includes("/food")) return Promise.resolve({ data: fakeFood });
+      if (url.includes("/getallcategories")) return Promise.resolve({ data: {uniqueCategories} });
+      if (url.includes("/food")) return Promise.resolve({ data: {foods} });
     });
   });
 
@@ -27,20 +29,20 @@ describe("MenuPage", () => {
 
     render(
       <StoreContext.Provider value={{ addToCart: mockAddToCart }}>
-        <MenuPage />
+        <Menu  />
       </StoreContext.Provider>
     );
 
     // Vérifie les catégories
-    const categoryBtn = await screen.findByText(fakeCategories[0]);
-    expect(categoryBtn).toBeInTheDocument();
+    const categoryBtn = await screen.findByRole('button', { name: /japanese/i });
+    
 
     // Clique sur une catégorie
     fireEvent.click(categoryBtn);
 
     // Vérifie les plats
-    const sushi = await screen.findByText(fakeFood[0].name);
-    const ramen = await screen.findByText(fakeFood[1].name);
+    const sushi = await screen.findByText(uniqueCategories[0]);
+    const ramen = await screen.findByText(uniqueCategories[1]);
     expect(sushi).toBeInTheDocument();
     expect(ramen).toBeInTheDocument();
 

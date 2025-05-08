@@ -21,13 +21,14 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
   useEffect(() => {
     if (error) {
       const timer = setTimeout(() => {
-        setError(null); // or setError('') if you prefer
-      }, 3000); // 3000ms = 3 seconds
+        setError(null); 
+      }, 3000); 
 
-      return () => clearTimeout(timer); // Clean up the timer if component unmounts
+      return () => clearTimeout(timer); 
     }
   }, [error]);
   const Login = () => {
+    
     axios
       .post(`http://localhost:4000/user/user/${url}`, form)
       .then((response) => {
@@ -69,7 +70,7 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
             className="absolute top-3 right-3 text-[#1f1f2e] hover:text-[#fce588] transition-transform"
             onClick={onClose}
           >
-            <IoClose size={24} />
+            ×
           </button>
   
           {/* Title */}
@@ -121,6 +122,7 @@ const LoginPopup = ({ isOpen, onClose, type, toggleType }) => {
                     value={form?.country}
                     onChange={handleChange}
                     className="input-style"
+                    placeholder="Country"
                   >
                     {countries.map((country, index) => (
                       <option key={index} value={country}>

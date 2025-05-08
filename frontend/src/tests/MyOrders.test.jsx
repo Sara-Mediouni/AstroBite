@@ -3,12 +3,13 @@ import axios from "axios";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import MyOrders from "../pages/MyOrders";
 
-vi.mock("axios");
-
+ vi.mock("axios");
+ axios.post = vi.fn();
 describe("My orders", () => {
-  const fakeOrders = [
+  const data = [
     {
       _id: "1",
+      userId:"120",
       items: [
         {item:{
           _id: "1",
@@ -22,17 +23,19 @@ describe("My orders", () => {
       amount: "15.00",
     },
   ];
-
+  
   beforeEach(() => {
-    axios.get.mockImplementation((url) => {
-      if (url.includes("/userorders/")) {
-        return Promise.resolve({ data: fakeOrders });
-      }
-    });
-
+    vi.spyOn(Storage.prototype, "getItem").mockImplementation((key) => {
+    if (key === "user") return "120";
+  });
+  axios.get.mockImplementation((url) => {
+    if (url.includes(`/userorders/${data[0].userId}`)) {
+      return Promise.resolve({ data: {data} });
+    }
+  });
     axios.post.mockResolvedValue({ data: { message: "Order cancelled" } });
   });
-
+  
   it("affiche les commandes et permet d'annuler une commande", async () => {
     render(<MyOrders />);
 
@@ -49,4 +52,4 @@ describe("My orders", () => {
       );
     });
   });
-});
+})
