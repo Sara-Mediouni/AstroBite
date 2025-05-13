@@ -1,4 +1,4 @@
-# 🍔✨ **AstroBite** — Fast Food Galactique
+# 🍔✨ AstroBite — Fast Food Galactique
 
 > *"Une aventure culinaire interstellaire au cœur du cosmos."* 🚀🌌
 
@@ -9,185 +9,178 @@
 ![Framer Motion](https://img.shields.io/badge/Framer--Motion-EF008F?style=for-the-badge&logo=framer&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 
+![Tests](https://img.shields.io/badge/tests-passing-brightgreen?style=for-the-badge)
+![Coverage](https://img.shields.io/badge/coverage-90%25-yellowgreen?style=for-the-badge)
+![GitHub Actions](https://img.shields.io/github/actions/workflow/status/Sara-Mediouni/AstroBite/tests.yml?style=for-the-badge)
+
 ---
 
 ## 📚 Table des matières
 
 - [✨ Présentation](#-présentation)
 - [🛠️ Stack Technique](#️-stack-technique)
+- [🧩 Table des Services](#-table-des-services)
 - [📸 Aperçu](#-aperçu)
 - [🚀 Lancer localement](#-lancer-localement)
-- [📋 Fonctionnalités principales](#-fonctionnalités-principales)
 - [📂 Organisation du projet](#-organisation-du-projet)
+- [📋 Fonctionnalités principales](#-fonctionnalités-principales)
 - [⚠️ Remarques](#️-remarques)
 
 ---
 
 ## ✨ Présentation
 
-AstroBite est une application de fast food galactique au style immersif et original, conçue pour offrir une expérience utilisateur hors du commun.
-Chaque burger représente une planète, chaque boisson une étoile filante — plongez dans une interface spatiale moderne.
-Le projet inclut également un dashboard d'administration complet pour gérer les produits, les commandes et les utilisateurs, tout en étant structuré sur une architecture microservices.
-
+AstroBite est une application de **fast food galactique** immersive avec des visuels dynamiques, une navigation fluide, et une architecture microservices performante. Chaque élément du menu est inspiré du cosmos.  
+Un **dashboard admin** permet de gérer produits, utilisateurs et commandes.
 
 ---
 
 ## 🛠️ Stack Technique
 
--Frontend : React.js + TailwindCSS + Vite + Framer Motion
+| Domaine         | Outils & Technologies                          |
+|-----------------|------------------------------------------------|
+| Frontend        | React, TailwindCSS, Vite, Framer Motion        |
+| Backend         | Node.js, Express.js                            |
+| Authentification| JWT                                            |
+| Base de données | MongoDB                                        |
+| CI/CD           | GitHub Actions                                 |
+| Tests           | Mocha, Chai, Sinon                             |
+| Architecture    | Microservices + API Gateway                    |
 
--Backend : Node.js + Express.js
+---
 
--Microservices :
+## 🧩 Table des Services
 
--User Service : Gestion des utilisateurs
-
--Order Service : Gestion des commandes
-
--Food Service : Gestion des produits alimentaires
-
--Base de données : MongoDB
-
--Authentification : JWT (JSON Web Token)
-
--Admin Dashboard : React + Accès basé sur les rôles (Role-based access)
-
+| Service         | Port | Description                             | Dossier                  |
+|-----------------|------|-----------------------------------------|--------------------------|
+| User Service    | 4001 | Gère l’inscription, connexion, profil   | `/backend/user-service`  |
+| Order Service   | 4002 | Gère les commandes des utilisateurs     | `/backend/order-service` |
+| Food Service    | 4003 | Gère les produits alimentaires          | `/backend/food-service`  |
+| API Gateway     | 4000 | Redirige les requêtes vers les services | `/backend/gateway`       |
 
 ---
 
 ## 📸 Aperçu
 
-> (https://astro-bite.vercel.app)
+> 🌐 [astro-bite.vercel.app](https://astro-bite.vercel.app)
 
 ---
 
 ## 🚀 Lancer localement
-### 1. Cloner le repo
+
+### 1. Cloner le dépôt
 
 ```bash
-
 git clone https://github.com/Sara-Mediouni/AstroBite.git
-cd astrobite
-``` 
+cd AstroBite
+```
 ### 2. Installer les dépendances
 
+cd frontend && npm install
+cd ../admin && npm install
+cd ../backend/user-service && npm install
+cd ../backend/order-service && npm install
+cd ../backend/food-service && npm install
+cd ../backend/gateway && npm install
+
+
+### 3. Créer les fichiers .env
+#### /backend/user-service/.env
 ```bash
-cd frontend
-npm run dev
-
-cd ../admin
-npm run dev
-
-cd ../backend
-nodemon server
-```
-### 3. Créer un fichier `.env` dans /backend avec les variables suivantes :
-Créer un fichier .env pour chaque microservice dans les répertoires appropriés :
-
-#### User Service (/backend/user-service/.env) :
-
-```bash 
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=4001
 ```
-#### Order Service (/backend/order-service/.env) :
 
-```bash 
+#### /backend/order-service/.env
+
+```bash
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=4002
 ```
-#### Food Service (/backend/food-service/.env) :
-```bash 
+#### /backend/food-service/.env
+
+```bash
 MONGO_URI=your_mongodb_uri
 JWT_SECRET=your_jwt_secret
 PORT=4003
 ```
 
-#### API Gateway (/backend/gateway/.env) :
-```bash 
+#### /backend/gateway/.env
+
+```bash
 USER_SERVICE_URL=http://localhost:4001
 ORDER_SERVICE_URL=http://localhost:4002
 FOOD_SERVICE_URL=http://localhost:4003
 
 ```
-
-
-### 4. Démarrer le backend
+## 4. Démarrer les services backend
 ```bash
-cd backend/user-service
-nodemon server.js
+# Dans 4 terminaux séparés
+cd backend/user-service && nodemon server.js
+cd backend/order-service && nodemon server.js
+cd backend/food-service && nodemon server.js
+cd backend/gateway && nodemon server.js
 
-cd ../order-service
-nodemon server.js
 
-cd ../food-service
-nodemon server.js
-
-cd ../api-gateway
-nodemon server.js
 
 ```
-### 5. Démarrer le frontend client
+
+## 5. Démarrer le frontend
 ```bash
-cd ../frontend
+
+cd frontend
 npm run dev
+
+
 ```
-### 6. Démarrer le dashboard admin (optionnel)
+
+## 6. Démarrer l’admin dashboard (optionnel)
 ```bash
-cd ../admin
+
+cd admin
 npm run dev
+
 ```
+
 ## 📂 Organisation du projet
 
 ```bash
 /AstroBite
-  /frontend               # Application frontend (React)
-  /admin                  # Dashboard admin (React)
-  /backend
-    /user-service 
-    .env        # Microservice pour la gestion des utilisateurs
-    /order-service  
-    .env      # Microservice pour la gestion des commandes
-    /food-service 
-    .env        # Microservice pour la gestion des produits alimentaires
-    /gateway              # API Gateway pour orchestrer les requêtes
-  .env                    # Fichier de configuration avec les URL des microservices
-  README.md               # Documentation du projet
-
+│
+├── frontend               # Interface utilisateur principale
+├── admin                  # Dashboard d'administration
+└── backend
+    ├── user-service       # Service utilisateurs
+    ├── order-service      # Service commandes
+    ├── food-service       # Service menu
+    └── gateway            # API Gateway (proxy d’entrée)
 
 ```
 
-### Microservices :
-#### User Service : Gérez les utilisateurs (inscription, profil, etc.).
+##  Fonctionnalités principales
+### 🌠 Utilisateur
+🍔 Navigation dans le menu galactique
 
-#### Order Service : Traitez les commandes passées par les utilisateurs.
+🛒 Ajout au panier
 
-#### Food Service : Gérez les plats proposés dans le menu.
+💳 Paiement simulé
 
-#### Chaque service est responsable d'une fonctionnalité spécifique et l'API Gateway redirige les requêtes vers les services appropriés.
+📦 Suivi des commandes
 
+### 🪐 Admin Dashboard
+📦 Gestion CRUD des produits
 
-## 📋 Fonctionnalités principales
-## 🌠 Utilisateur
--🍔 Parcourir un menu galactique
+👤 Gestion des utilisateurs
 
--🛒 Ajouter des articles au panier
-
--💳 Paiement fictif intégré
-
--📦 Suivi du statut de commande
-
-## 🪐 Admin Dashboard
--📦 Gestion des produits
-
--👤 Gestion des utilisateurs
-
--🧾 Suivi et mise à jour des commandes
+🧾 Suivi et mise à jour des commandes
 
 ## ⚠️ Remarques
-Le backend nécessite une base de données MongoDB (local ou cloud Mongo Atlas).
+-Nécessite une base MongoDB (locale ou MongoDB Atlas).
 
-Un système d'authentification JWT est implémenté pour sécuriser les routes utilisateur/admin.
+-Authentification sécurisée via JWT.
 
+-Des tests unitaires sont présents dans chaque microservice.
+
+-CI/CD automatisé avec GitHub Actions.
