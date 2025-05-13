@@ -44,7 +44,7 @@ Un **dashboard admin** permet de gérer produits, utilisateurs et commandes.
 | Authentification| JWT                                            |
 | Base de données | MongoDB                                        |
 | CI/CD           | GitHub Actions                                 |
-| Tests           | Mocha, Chai, Sinon                             |
+| Tests           | Mocha, Chai, Sinon, React Testing Library, Jest                             |
 | Architecture    | Microservices + API Gateway                    |
 
 ---
